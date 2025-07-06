@@ -2,8 +2,8 @@ CREATE TABLE IF NOT EXISTS posts (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     heading VARCHAR(150) NOT NULL,
     body VARCHAR(2048),
-    likes BIGINT
---     image BLOB
+    likes BIGINT,
+    image BLOB
 );
 
 --     CREATE TABLE IF NOT EXISTS tags (

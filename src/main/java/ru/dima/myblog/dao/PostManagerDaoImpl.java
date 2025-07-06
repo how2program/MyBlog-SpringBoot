@@ -28,7 +28,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setId(rs.getLong("id"));
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
-//            post.setImage(rs.getBlob("image"));
+            post.setImage(rs.getBlob("image"));
             post.setLikes(rs.getLong("likes"));
             return post;
         });
@@ -36,7 +36,6 @@ public class PostManagerDaoImpl implements PostManagerDao {
 
     @Override
     public Optional<Post> findById(long id) {
-//        RowMapper<Post> mapToPostClass = new BeanPropertyRowMapper<>(Post.class);
 
         return jdbcTemplate.query("SELECT * FROM posts WHERE id = ?",
                         new Object[]{id}, (rs, rowNum) -> {
@@ -44,7 +43,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setId(rs.getLong("id"));
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
-//            post.setImage(rs.getBlob("image"));
+            post.setImage(rs.getBlob("image"));
             post.setLikes(rs.getLong("likes"));
             return post;
         })
@@ -55,7 +54,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
     @Override
     public void create(Post post) {
         jdbcTemplate.update("INSERT INTO posts (heading, body/*, image*/, likes) VALUES (?, ? /*,?*/,?)",
-                post.getHeading(), post.getBody() /*, post.getImage()*/, 0);
+                post.getHeading(), post.getBody(), post.getImage(), 0);
     }
 //
 //    @Override
