@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.dima.myblog.model.Post;
 import ru.dima.myblog.service.PostManagerService;
 
 @Controller
@@ -27,5 +28,16 @@ public class PostController {
     public String showOnePost(Model model, @PathVariable(name = "id") long id) {
         model.addAttribute("post", postManagerService.findById(id));
         return "singlepost";
+    }
+
+    @ModelAttribute(name = "postToCreate")
+    public Post postObjectInitializer() {
+        return new Post();
+    }
+
+    @PostMapping
+    public String createPost(@ModelAttribute(name = "postToCreate") Post post) {
+        postManagerService.create(post);
+        return "redirect:/posts";
     }
 }

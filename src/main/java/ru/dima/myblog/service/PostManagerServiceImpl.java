@@ -28,4 +28,9 @@ public class PostManagerServiceImpl implements PostManagerService {
     public Optional<Post> findById(long id) {
         return postManagerDao.findById(id);
     }
+
+    @Override
+    public void create(Post post) {
+        postManagerDao.create(post);
+    }
 }

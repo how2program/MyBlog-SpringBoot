@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">>
   <head>
     <meta charset="UTF-8">
     <title>Available posts</title>
@@ -9,6 +11,14 @@
       <a th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
       <p th:text="${post.getBody()}">BODY</p>
     </div>
+
+    <form th:method="POST" th:action="@{/posts}" th:object="${postToCreate}">
+      <label for="heading">Heading</label>
+      <input type="text" th:field="*{heading}" id="heading"/>
+
+
+
+    </form>
 
   </body>
 </html>

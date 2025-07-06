@@ -52,10 +52,11 @@ public class PostManagerDaoImpl implements PostManagerDao {
                 .findAny();
     }
 
-//    @Override
-//    public void create(Post post) {
-//
-//    }
+    @Override
+    public void create(Post post) {
+        jdbcTemplate.update("INSERT INTO posts (heading, body/*, image*/) VALUES (?, ? /*,?*/)",
+                post.getHeading(), post.getBody() /*, post.getImage()*/);
+    }
 //
 //    @Override
 //    public void update(Post post) {
