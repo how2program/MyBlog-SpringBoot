@@ -4,6 +4,6 @@ import ru.dima.myblog.model.Post;
 
 public interface LikeableDao {
 
-    void like(Post post);
+    void like(long id);
 
 }

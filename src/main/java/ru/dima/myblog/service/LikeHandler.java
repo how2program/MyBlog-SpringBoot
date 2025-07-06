@@ -19,8 +19,7 @@ public class LikeHandler implements Likeable {
     }
 
     @Override
-    public void like(Post post) {
-        post.setLikes(post.getLikes() + 1);
-        likeHandlerDao.like(post);
+    public void like(long id) {
+        likeHandlerDao.like(id);
     }
 }

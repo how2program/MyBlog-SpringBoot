@@ -29,7 +29,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
 //            post.setImage(rs.getBlob("image"));
-//            post.setLikes(rs.getLong("likes"));
+            post.setLikes(rs.getLong("likes"));
             return post;
         });
     }
@@ -45,7 +45,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
 //            post.setImage(rs.getBlob("image"));
-//            post.setLikes(rs.getLong("likes"));
+            post.setLikes(rs.getLong("likes"));
             return post;
         })
                 .stream()

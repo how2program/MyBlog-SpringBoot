@@ -7,18 +7,18 @@
         <title>A single post</title>
     </head>
     <body>
-        <a th:text="назад..." th:href="@{/posts}">BACK</a>
+        <a th:text="лента..." th:href="@{/posts}">BACK</a>
         <h1 th:text="${post.get().getHeading()}"> HEADING</h1>
         <br>
         <br>
         <a th:text="${post.get().getBody()}">BODY</a>
         <br>
         <br>
-        <p>"Мне нравится"</p>
+        <form th:method="POST" th:action="@{/posts/like/{id}(id = ${post.get().getId()})}">
+            <button type="submit">"Мне нравится"</button>
+        </form>
         <a th:text="${post.get().getLikes()}">LIKES</a>
 
-        <form th:action="@{/posts/like}" method="post">
-            <button type="submit" th:text="Мне нравится"></button>
-        </form>
+
     </body>
 </html>

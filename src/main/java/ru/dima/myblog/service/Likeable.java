@@ -4,5 +4,5 @@ import ru.dima.myblog.model.Post;
 
 public interface Likeable {
 
-    void like(Post post);
+    void like(long id);
 }

@@ -45,9 +45,12 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @PostMapping("/like")
-    public String like(@ModelAttribute(name = "post") Post post) {
-        likeHandler.like(post);
-        return "redirect:/posts/" + post.getId();
+    @PostMapping("/like/{postId}")
+    public String like(@PathVariable long postId, Model model) {
+        likeHandler.like(postId);
+        model.addAttribute("post", postManagerService.findById(postId));
+        return "redirect:/posts/" + postId;
     }
+
+
 }
