@@ -54,8 +54,8 @@ public class PostManagerDaoImpl implements PostManagerDao {
 
     @Override
     public void create(Post post) {
-        jdbcTemplate.update("INSERT INTO posts (heading, body/*, image*/) VALUES (?, ? /*,?*/)",
-                post.getHeading(), post.getBody() /*, post.getImage()*/);
+        jdbcTemplate.update("INSERT INTO posts (heading, body/*, image*/, likes) VALUES (?, ? /*,?*/,?)",
+                post.getHeading(), post.getBody() /*, post.getImage()*/, 0);
     }
 //
 //    @Override

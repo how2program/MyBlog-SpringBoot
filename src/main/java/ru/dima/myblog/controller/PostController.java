@@ -5,17 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.dima.myblog.model.Post;
+import ru.dima.myblog.service.Likeable;
 import ru.dima.myblog.service.PostManagerService;
+import ru.dima.myblog.service.PostManagerServiceImpl;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
 
     PostManagerService postManagerService;
+    Likeable likeHandler;
 
     @Autowired
-    public PostController(PostManagerService postManagerService) {
+    public PostController(PostManagerService postManagerService, Likeable likeHandler) {
         this.postManagerService = postManagerService;
+        this.likeHandler = likeHandler;
     }
 
     @GetMapping
@@ -39,5 +43,11 @@ public class PostController {
     public String createPost(@ModelAttribute(name = "postToCreate") Post post) {
         postManagerService.create(post);
         return "redirect:/posts";
+    }
+
+    @PostMapping("/like")
+    public String like(@ModelAttribute(name = "post") Post post) {
+        likeHandler.like(post);
+        return "redirect:/posts/" + post.getId();
     }
 }
