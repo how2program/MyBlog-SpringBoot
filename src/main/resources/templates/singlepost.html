@@ -13,7 +13,7 @@
         <br>
         <a th:text="${post.get().getBody()}">BODY</a>
         <br>
-        <a th:img="${post.get().getImage()">IMAGE</a>
+        <a th:img="${post.get().getImage()}">IMAGE</a>
         <br>
         <form th:method="POST" th:action="@{/posts/like/{id}(id = ${post.get().getId()})}">
             <button type="submit">"Мне нравится"</button>
