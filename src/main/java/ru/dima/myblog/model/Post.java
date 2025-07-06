@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -18,29 +20,20 @@ public class Post {
     private String heading;
     private String body;
     private long likes;
-    private byte[] image;
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", heading='" + heading + '\'' +
-                ", body='" + body + '\'' +
-                ", likes=" + likes +
-                ", image=" + Arrays.toString(image) +
-                '}';
-    }
+    private Blob image;
+    //Буду взаимодействовать с ними через геттеры и сеттеры, без отдельных методов.
+    private ArrayList<String> comments;
+    private ArrayList<String> tags;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return id == post.id && likes == post.likes && Objects.equals(heading, post.heading) && Objects.equals(body, post.body) && Objects.deepEquals(image, post.image);
+        return id == post.id && likes == post.likes && Objects.equals(heading, post.heading) && Objects.equals(body, post.body) && Objects.equals(image, post.image) && Objects.equals(comments, post.comments) && Objects.equals(tags, post.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, heading, body, likes, Arrays.hashCode(image));
+        return Objects.hash(id, heading, body, likes, image, comments, tags);
     }
-
 }

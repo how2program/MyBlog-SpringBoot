@@ -18,15 +18,6 @@ public class Commentary {
     private String text;
 
     @Override
-    public String toString() {
-        return "Commentary{" +
-                "id=" + id +
-                ", postId=" + postId +
-                ", text='" + text + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Commentary that = (Commentary) o;
@@ -37,5 +28,4 @@ public class Commentary {
     public int hashCode() {
         return Objects.hash(id, postId, text);
     }
-
 }
