@@ -3,8 +3,7 @@ package ru.dima.myblog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.dima.myblog.service.PostManagerService;
 
 @Controller
@@ -18,9 +17,15 @@ public class PostController {
         this.postManagerService = postManagerService;
     }
 
-    @GetMapping()
-    public String viewAllPosts(Model model) {
+    @GetMapping
+    public String showAllPosts(Model model) {
         model.addAttribute("posts", postManagerService.findAll());
         return "allposts";
+    }
+
+    @GetMapping("/{id}")
+    public String showOnePost(Model model, @PathVariable(name = "id") long id) {
+        model.addAttribute("post", postManagerService.findById(id));
+        return "singlepost";
     }
 }

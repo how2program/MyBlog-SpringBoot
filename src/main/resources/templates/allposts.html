@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Available posts</title>
+  </head>
+  <body>
+    <div th:each="post : ${posts}">
+      <a th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
+      <p th:text="${post.getBody()}">BODY</p>
+    </div>
 
-  <p>ХЕЛЛОУ ЧЕ НЕ РАБОТАЕШ</p>
-
-</body>
+  </body>
 </html>

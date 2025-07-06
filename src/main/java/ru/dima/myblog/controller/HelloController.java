@@ -12,9 +12,4 @@ public class HelloController {
     public String hello() {
         return "Welcome to my blog.";
     }
-
-    @GetMapping("/another")
-    public String another() {
-        return "allposts";
-    }
 }

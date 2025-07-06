@@ -1,31 +1,34 @@
 package ru.dima.myblog.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Objects;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Commentary {
 
     private long id;
     private long postId;
     private String text;
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Commentary that = (Commentary) o;
-        return id == that.id && postId == that.postId && Objects.equals(text, that.text);
+    public long getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, postId, text);
+    public void setId(long id) {
+        this.id = id;
     }
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(long postId) {
+        this.postId = postId;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.dima.myblog.model.Post;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,21 +23,33 @@ public class PostManagerDaoImpl implements PostManagerDao {
 
     @Override
     public List<Post> findAll() {
-        return jdbcTemplate.query("SELECT * FROM posts",
-                new BeanPropertyRowMapper<>(Post.class));
+        return jdbcTemplate.query("SELECT * FROM posts", (rs, rowNum) -> {
+            Post post = new Post();
+            post.setId(rs.getLong("id"));
+            post.setHeading(rs.getString("heading"));
+            post.setBody(rs.getString("body"));
+//            post.setImage(rs.getBlob("image"));
+//            post.setLikes(rs.getLong("likes"));
+            return post;
+        });
     }
 
     @Override
     public Optional<Post> findById(long id) {
-        String sql = "SELECT * FROM posts WHERE id = ?";
-        Object[] longId = new Object[]{id};
-        RowMapper<Post> mapToPostClass = new BeanPropertyRowMapper<>(Post.class);
+//        RowMapper<Post> mapToPostClass = new BeanPropertyRowMapper<>(Post.class);
 
-        Optional<Post> result = jdbcTemplate.query(sql, longId, mapToPostClass)
+        return jdbcTemplate.query("SELECT * FROM posts WHERE id = ?",
+                        new Object[]{id}, (rs, rowNum) -> {
+            Post post = new Post();
+            post.setId(rs.getLong("id"));
+            post.setHeading(rs.getString("heading"));
+            post.setBody(rs.getString("body"));
+//            post.setImage(rs.getBlob("image"));
+//            post.setLikes(rs.getLong("likes"));
+            return post;
+        })
                 .stream()
                 .findAny();
-
-        return result;
     }
 
 //    @Override

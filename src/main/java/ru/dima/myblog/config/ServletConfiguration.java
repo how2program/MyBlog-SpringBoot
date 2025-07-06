@@ -8,6 +8,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan(basePackages = "ru.dima.myblog")
 @EnableWebMvc
-@PropertySource("classpath:application.yaml")
+@PropertySource("classpath:application.properties")
 public class ServletConfiguration {
 }

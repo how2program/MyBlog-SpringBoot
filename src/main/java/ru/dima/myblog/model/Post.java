@@ -1,39 +1,75 @@
 package ru.dima.myblog.model;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Post {
 
     private long id;
     private String heading;
     private String body;
-    private long likes;
     private Blob image;
-    //Буду взаимодействовать с ними через геттеры и сеттеры, без отдельных методов.
-    private ArrayList<String> comments;
-    private ArrayList<String> tags;
+    private long likes;
+//    private ArrayList<String> comments = new ArrayList<>();
+//    private ArrayList<String> tags = new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Post post = (Post) o;
-        return id == post.id && likes == post.likes && Objects.equals(heading, post.heading) && Objects.equals(body, post.body) && Objects.equals(image, post.image) && Objects.equals(comments, post.comments) && Objects.equals(tags, post.tags);
+//    public ArrayList<String> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(ArrayList<String> tags) {
+//        this.tags = tags;
+//    }
+//
+//    public ArrayList<String> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(ArrayList<String> comments) {
+//        this.comments = comments;
+//    }
+
+    public long getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, heading, body, likes, image, comments, tags);
+    public void setId(long id) {
+        this.id = id;
     }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
+    }
+
+    public long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(long likes) {
+        this.likes = likes;
+    }
+
+
 }
