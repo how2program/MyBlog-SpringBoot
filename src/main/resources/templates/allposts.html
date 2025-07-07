@@ -6,10 +6,13 @@
     <meta charset="UTF-8">
     <title>Available posts</title>
     <style>
-      #feedHeading {
+      .feedHeading {
         color: rgba(43, 20, 255, 0.96);
-        font-size: 25px;
+        font-size: 20px;
         font-family: Bahnschrift;
+        font-weight: bold;
+        max-width: 300px;
+        text-align: center;
       }
       #iLike {
         color: red;
@@ -18,31 +21,72 @@
       .onOneLine {
         display: inline-block;
       }
+      .textFormat {
+        width: 600px;
+        word-wrap: break-word;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-indent: 2em;
+      }
+      /*.ALLOBJECTS {*/
+      /*  text-align: center;*/
+      /*}*/
+      .headingFormSize {
+        width: 300px;
+        height: 50px;
+      }
+      .bodyFormSize {
+        width: 300px;
+        height: 150px;
+      }
     </style>
   </head>
+
   <body>
 
+  <div class="ALLOBJECTS">
+
+
     <div th:each="post : ${posts}">
-      <a id="feedHeading"
+      <div class="feedHeading">
+      <a
          th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
+      </div>
       <br>
+      <p class="textFormat" th:text="${post.getBody()}">BODY</p>
       <p class="onOneLine"
          id="iLike">&#10084;</p>
       <p class="onOneLine"
          id="likesNum"
          th:text="${post.getLikes()}">LIKES</p>
-      <p th:text="${post.getBody()}">BODY</p>
     </div>
 
-    <form th:method="POST" th:action="@{/posts}" th:object="${postToCreate}">
+    <button id="toggleFormButton">Создать пост</button>
+    <form id="editForm" th:method="POST" th:action="@{/posts}" th:object="${postToCreate}"
+          style="display: none;">
       <label for="heading">Заголовок</label>
-      <input type="text" th:field="*{heading}" id="heading"/>
+      <input class="headingFormSize" type="text" th:field="*{heading}" id="heading"/>
       <br>
       <label for="body">Текст поста</label>
-      <input type="text" th:field="*{body}" id="body"/>
+      <input class="bodyFormSize" type="text" th:field="*{body}" id="body" style="width: 300px; height: 200px;"/>
       <br>
       <input type="submit" value="Опубликовать"/>
     </form>
+    <script>
+      document.getElementById('toggleFormButton').addEventListener('click', function() {
+        var form = document.getElementById('editForm');
+        if (form.style.display === 'none') {
+          form.style.display = 'block';
+        } else {
+          form.style.display = 'none';
+        }
+      });
+    </script>
+
+  </div>
+
+
 
   </body>
 </html>

@@ -19,17 +19,17 @@ CREATE TABLE IF NOT EXISTS posts (
 -- );
 
 INSERT INTO posts(heading, body) VALUES ('What is Lorem Ipsum?', 'What is Lorem Ipsum?
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s' ||
-                                                                 'standard dummy text ever since the 1500s,' ||
-                                                                 'when an unknown printer took a galley of' ||
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s ' ||
+                                                                 'standard dummy text ever since the 1500s, ' ||
+                                                                 'when an unknown printer took a galley of ' ||
                                                                  'type and scrambled it to make a type' ||
                                                                  'specimen book.');
 
 INSERT INTO posts(heading, body) VALUES ('Для провального экшена Marvel''s Avengers хотели выпустить большое' ||
                                          'дополнение с Капитаном Марвел и новыми героями', 'Супергеройский экшен ' ||
-                                        'Marvel''s Avengers от Crystal Dynamics и Square Enix обещал стать масштабной' ||
-                                        'игрой-сервисом с продолжительной поддержкой, но стал катастрофическим провалом' ||
-                                        'для разработчиков. Поддержка игры уже давно прекращена, и проект официально' ||
+                                        'Marvel''s Avengers от Crystal Dynamics и Square Enix обещал стать масштабной ' ||
+                                        'игрой-сервисом с продолжительной поддержкой, но стал катастрофическим провалом ' ||
+                                        'для разработчиков. Поддержка игры уже давно прекращена, и проект официально ' ||
                                         'был изъят из публичного доступа, но как стало известно сегодня, ' ||
                                         'перед этим для него хотели выпустить последнее финальное обновление с новым контентом.');
 

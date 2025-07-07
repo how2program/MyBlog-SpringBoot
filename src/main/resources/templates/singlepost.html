@@ -5,20 +5,58 @@
     <head>
         <meta charset="UTF-8">
         <title>A single post</title>
+        <style>
+            #iLike {
+                color: red;
+                font-size: 15px;
+            }
+            .onOneLine {
+                display: inline-block;
+            }
+            .headingFormSize {
+                width: 300px;
+                height: 50px;
+            }
+            .bodyFormSize {
+                width: 300px;
+                height: 150px;
+            }
+            .textFormat {
+                width: 600px;
+                max-width: 800px;
+                word-wrap: break-word;
+                text-indent: 2em;
+            }
+            .feedHeading {
+                color: rgba(43, 20, 255, 0.96);
+                font-size: 25px;
+                font-family: Bahnschrift;
+                font-weight: bold;
+                max-width: 300px;
+            }
+            h1 {
+                text-align: center;
+            }
+        </style>
     </head>
+
+
     <body>
         <a th:text="лента..." th:href="@{/posts}">BACK</a>
-        <h1 th:text="${post.get().getHeading()}"> HEADING</h1>
+        <h1 class=feedHeading
+            th:text="${post.get().getHeading()}">HEADING</h1>
         <br>
         <br>
-        <a th:text="${post.get().getBody()}">BODY</a>
+        <p class="textFormat"
+           th:text="${post.get().getBody()}">BODY</p>
         <br>
         <a th:img="${post.get().getImage()}">IMAGE</a>
         <br>
         <form th:method="POST" th:action="@{/posts/like/{id}(id = ${post.get().getId()})}">
-            <button type="submit">"Мне нравится"</button>
+            <button type="submit" id="iLike" class="onOneLine">&#10084;</button>
+            <a class="onOneLine" th:text="${post.get().getLikes()}">LIKES</a>
         </form>
-        <a th:text="${post.get().getLikes()}">LIKES</a>
+
         <br>
         <br>
         <br>
@@ -27,13 +65,19 @@
         <button id="toggleFormButton">Редактировать пост</button>
         <form id="editForm" th:method="POST" th:action="@{/posts/{id}(id = ${post.get().getId()})}"
               th:object="${post}" style="display: none;">
+
             <input type="hidden" name="_method" value="patch">
             <label for="heading">Заголовок</label>
-            <input type="text" th:field="*{heading}" id="heading"/>
+
+            <input class="headingFormSize" type="text" th:field="*{heading}" id="heading"/>
+
             <br>
+
             <label for="body">Текст поста</label>
-            <input type="text" th:field="*{body}" id="body"/>
+            <input class="bodyFormSize" type="text" th:field="*{body}" id="body"/>
+
             <br>
+
             <input type="submit" value="Отредактировать"/>
         </form>
         <script>
