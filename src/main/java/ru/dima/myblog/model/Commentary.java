@@ -31,4 +31,8 @@ public class Commentary {
         this.text = text;
     }
 
+    @Override
+    public String toString() {
+        return text;
+    }
 }

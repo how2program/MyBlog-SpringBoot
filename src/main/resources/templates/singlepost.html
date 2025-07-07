@@ -83,9 +83,17 @@
         <br>
         <br>
         <br>
-        <form th:method=":POTS" th:action="@{/posts/comment/{id}(id = ${post.get().getId()})}" th:object="commentary">
 
+        <form th:method="POST" th:action="@{/posts/commentary/{id}(id = ${post.get().getId()})}" th:object="${commentary}">
+            <input type="text" th:field="*{text}"/>
+            <input type="submit" value="Оставить комментарий"/>
         </form>
+
+        <p>Комментарии:</p>
+        <p th:text="${post.get().getCommentaries()}">COMMENTS</p>
+
+        <br>
+        <br>
         <br>
         <br>
         <button id="toggleFormButton">Редактировать пост</button>
@@ -93,8 +101,8 @@
               th:object="${post}" style="display: none;">
 
             <input type="hidden" name="_method" value="patch">
-            <label for="heading">Заголовок</label>
 
+            <label for="heading">Заголовок</label>
             <input class="headingFormSize"
                    type="text"
                    th:field="*{heading}"

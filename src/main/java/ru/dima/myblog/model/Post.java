@@ -15,24 +15,7 @@ public class Post {
     private long likes;
     private List<Tag> tags;
     private String tagsInString;
-
-//    private ArrayList<Commentary> comments = new ArrayList<>();
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-//
-//    public List<Commentary> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Commentary> comments) {
-//        this.comments = comments;
-//    }
+    private List<Commentary> comments = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -74,6 +57,13 @@ public class Post {
         this.likes = likes;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     public String getTagsInString() {
         return tagsInString;
     }
@@ -81,4 +71,13 @@ public class Post {
     public void setTagsInString(String tagsInString) {
         this.tagsInString = tagsInString;
     }
+
+    public List<Commentary> getCommentaries() {
+        return comments;
+    }
+    public void setCommentaries(List<Commentary> comments) {
+        this.comments = comments;
+    }
+
+
 }

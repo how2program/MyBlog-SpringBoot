@@ -4,5 +4,5 @@ import ru.dima.myblog.model.Commentary;
 
 public interface CommentaryManagerService {
 
-    void createCommentary(long id, Commentary commentary);
+    void createCommentary(long postId, Commentary commentary);
 }

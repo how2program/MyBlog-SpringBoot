@@ -1,13 +1,10 @@
 package ru.dima.myblog.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.dima.myblog.model.Post;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +13,15 @@ public class PostManagerDaoImpl implements PostManagerDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final TagManagerDao tagManagerDao;
+    private final CommentaryManagerDao commentaryManagerDao;
 
     @Autowired
-    public PostManagerDaoImpl(JdbcTemplate jdbcTemplate, TagManagerDao tagManagerDao) {
+    public PostManagerDaoImpl(JdbcTemplate jdbcTemplate,
+                              TagManagerDao tagManagerDao,
+                              CommentaryManagerDao commentaryManagerDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.tagManagerDao = tagManagerDao;
+        this.commentaryManagerDao = commentaryManagerDao;
     }
 
     @Override
@@ -34,6 +35,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setImage(rs.getBlob("image"));
             post.setLikes(rs.getLong("likes"));
             post.setTags(tagManagerDao.findAllTagsToPost(postId));
+            post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
             return post;
         });
     }
@@ -50,6 +52,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setImage(rs.getBlob("image"));
             post.setLikes(rs.getLong("likes"));
             post.setTags(tagManagerDao.findAllTagsToPost(id));
+            post.setCommentaries(commentaryManagerDao.findAllCommentaries(id));
             return post;
         })
                 .stream()

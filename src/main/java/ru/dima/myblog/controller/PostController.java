@@ -58,7 +58,6 @@ public class PostController {
     @PostMapping
     public String createPost(@ModelAttribute(name = "postToCreate") Post post) throws InterruptedException {
         postManagerService.create(post);
-//        Thread.sleep(200);
         tagManagerService.create(post.getTagsInString(), currentPostId);
         currentPostId++;
         return "redirect:/posts";
@@ -84,9 +83,12 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @PostMapping(value = "/comment/{postId}")
-    public String comment(@PathVariable long postId, @ModelAttribute(name = "commentary") Commentary commentary) {
+    @PostMapping(value = "/commentary/{postId}")
+    public String createCommentary(@PathVariable long postId,
+                                   @ModelAttribute(name = "commentary") Commentary commentary,
+                                   Model model) {
         commentaryManagerService.createCommentary(postId, commentary);
+        model.addAttribute("commentary", postManagerService.findById(postId));
         return "redirect:/posts/" + postId;
     }
 

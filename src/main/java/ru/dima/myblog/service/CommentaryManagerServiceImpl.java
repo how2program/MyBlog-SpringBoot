@@ -15,9 +15,8 @@ public class CommentaryManagerServiceImpl implements CommentaryManagerService {
         this.commentaryManagerDao = commentaryManagerDao;
     }
 
-
     @Override
-    public void createCommentary(long id, Commentary commentary) {
-        commentaryManagerDao.createCommentary(id, commentary);
+    public void createCommentary(long postId, Commentary commentary) {
+        commentaryManagerDao.createCommentary(postId, commentary);
     }
 }
