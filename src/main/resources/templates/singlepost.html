@@ -39,17 +39,25 @@
                 margin-left: 160px;
             }
             body {
-                background-image: url(../static/backGroundPicSinglePost.jpg);
-                background-repeat: no-repeat;
-                background-size: cover;
                 margin-left: 35vw;
+            }
+            .tags {
+                width: 300px;
+                word-wrap: break-word;
+                color: #708090;
+            }
+            #tagsLabel {
+                font-weight: bold;
+                font-style: italic;
+                color: #708090;
             }
         </style>
     </head>
 
 
     <body>
-        <a th:text="лента..." th:href="@{/posts}">BACK</a>
+        <a th:text="лента..."
+           th:href="@{/posts}">BACK</a>
         <h1 class=feedHeading
             th:text="${post.get().getHeading()}">HEADING</h1>
         <br>
@@ -60,10 +68,15 @@
         <a th:img="${post.get().getImage()}">IMAGE</a>
         <br>
         <form th:method="POST" th:action="@{/posts/like/{id}(id = ${post.get().getId()})}">
-            <button type="submit" id="iLike" class="onOneLine">&#10084;</button>
-            <a class="onOneLine" th:text="${post.get().getLikes()}">LIKES</a>
+            <button type="submit"
+                    id="iLike"
+                    class="onOneLine">&#10084;</button>
+            <a class="onOneLine"
+               th:text="${post.get().getLikes()}">LIKES</a>
         </form>
 
+        <div th:each="oneTag : ${post.get().getTags()}">
+            <p th:text="${oneTag.getTag()}">HEADING</div>
         <br>
         <br>
         <br>
@@ -76,15 +89,18 @@
             <input type="hidden" name="_method" value="patch">
             <label for="heading">Заголовок</label>
 
-            <input class="headingFormSize" type="text" th:field="*{heading}" id="heading"/>
-
+            <input class="headingFormSize"
+                   type="text"
+                   th:field="*{heading}"
+                   id="heading"/>
             <br>
 
             <label for="body">Текст поста</label>
-            <input class="bodyFormSize" type="text" th:field="*{body}" id="body"/>
-
+            <input class="bodyFormSize"
+                   type="text"
+                   th:field="*{body}"
+                   id="body"/>
             <br>
-
             <input type="submit" value="Отредактировать"/>
         </form>
         <script>

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.dima.myblog.dao.PostManagerDao;
 import ru.dima.myblog.model.Post;
-
 import java.util.List;
 import java.util.Optional;
 

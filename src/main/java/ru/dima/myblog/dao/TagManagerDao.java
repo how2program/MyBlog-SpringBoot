@@ -7,12 +7,8 @@ import java.util.Optional;
 
 public interface TagManagerDao {
 
-    List<Tag> findAll();
+    List<Tag> findAllTagsToPost(long postId);
 
-    Optional<Tag> findById(long id);
-
-    void create(Tag post);
-
-    void deleteById(long id);
+    void create(List<Tag> tags);
 
 }

@@ -7,18 +7,25 @@ import org.springframework.web.bind.annotation.*;
 import ru.dima.myblog.model.Post;
 import ru.dima.myblog.service.Likeable;
 import ru.dima.myblog.service.PostManagerService;
+import ru.dima.myblog.service.TagManagerService;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
 
+    private static long currentPostId = 4;
+
     PostManagerService postManagerService;
+    TagManagerService tagManagerService;
     Likeable likeHandler;
 
     @Autowired
-    public PostController(PostManagerService postManagerService, Likeable likeHandler) {
+    public PostController(PostManagerService postManagerService,
+                          Likeable likeHandler,
+                          TagManagerService tagManagerService) {
         this.postManagerService = postManagerService;
         this.likeHandler = likeHandler;
+        this.tagManagerService = tagManagerService;
     }
 
     @GetMapping
@@ -39,8 +46,11 @@ public class PostController {
     }
 
     @PostMapping
-    public String createPost(@ModelAttribute(name = "postToCreate") Post post) {
+    public String createPost(@ModelAttribute(name = "postToCreate") Post post) throws InterruptedException {
         postManagerService.create(post);
+//        Thread.sleep(200);
+        tagManagerService.create(post.getTagsInString(), currentPostId);
+        currentPostId++;
         return "redirect:/posts";
     }
 

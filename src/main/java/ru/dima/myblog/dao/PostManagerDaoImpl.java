@@ -15,21 +15,25 @@ import java.util.Optional;
 public class PostManagerDaoImpl implements PostManagerDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final TagManagerDao tagManagerDao;
 
     @Autowired
-    public PostManagerDaoImpl(JdbcTemplate jdbcTemplate) {
+    public PostManagerDaoImpl(JdbcTemplate jdbcTemplate, TagManagerDao tagManagerDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.tagManagerDao = tagManagerDao;
     }
 
     @Override
     public List<Post> findAll() {
         return jdbcTemplate.query("SELECT * FROM posts", (rs, rowNum) -> {
             Post post = new Post();
-            post.setId(rs.getLong("id"));
+            long postId = rs.getLong("id");
+            post.setId(postId);
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
             post.setImage(rs.getBlob("image"));
             post.setLikes(rs.getLong("likes"));
+            post.setTags(tagManagerDao.findAllTagsToPost(postId));
             return post;
         });
     }

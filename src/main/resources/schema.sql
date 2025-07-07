@@ -6,15 +6,15 @@ CREATE TABLE IF NOT EXISTS posts (
     image BLOB
 );
 
---     CREATE TABLE IF NOT EXISTS tags (
---     id BIGINT PRIMARY KEY AUTO_INCREMENT,
---     post_id BIGINT REFERENCES posts(id),
---     tag VARCHAR(20) NOT NULL
--- );
+    CREATE TABLE IF NOT EXISTS tags (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    post_id BIGINT REFERENCES posts(id) ON DELETE SET NULL,
+    tag VARCHAR(20) NOT NULL
+);
 --
 -- CREATE TABLE IF NOT EXISTS commentaries (
 --     id BIGINT PRIMARY KEY AUTO_INCREMENT,
---     post_id BIGINT NOT NULL REFERENCES posts(id),
+--     post_id BIGINT NOT NULL REFERENCES posts(id) ON DELETE SET NULL,
 --     text VARCHAR(50)
 -- );
 

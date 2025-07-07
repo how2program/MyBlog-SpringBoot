@@ -7,9 +7,6 @@
     <title>Available posts</title>
     <style>
       body {
-        background-image: url(../static/backgroungPicAllposts.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,6 +48,16 @@
         width: 300px;
         height: 150px;
       }
+      .tags {
+        width: 300px;
+        word-wrap: break-word;
+        color: #708090;
+      }
+      #tagsLabel {
+        font-weight: bold;
+        font-style: italic;
+        color: #708090;
+      }
     </style>
   </head>
 
@@ -65,25 +72,43 @@
          th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
       </div>
       <br>
-      <p class="textFormat" th:text="${post.getBody()}">BODY</p>
+      <p class="textFormat"
+         th:text="${post.getBody()}">BODY</p>
+
       <p class="onOneLine"
          id="iLike">&#10084;</p>
+
       <p class="onOneLine"
          id="likesNum"
          th:text="${post.getLikes()}">LIKES</p>
+
+      <p id="tagsLabel">Теги:</p>
+      <div class="tags">
+        <p th:text = "${post.getTags()}">TAGS</p>
+      </div>
     </div>
 
     <button id="toggleFormButton">Создать пост</button>
-    <form id="editForm" th:method="POST" th:action="@{/posts}" th:object="${postToCreate}"
-          style="display: none;">
+
+    <form id="editForm" th:method="POST" th:action="@{/posts}" th:object="${postToCreate}" style="display: none;">
       <label for="heading">Заголовок</label>
-      <input class="headingFormSize" type="text" th:field="*{heading}" id="heading"/>
+      <input class="headingFormSize"
+             type="text" th:field="*{heading}"
+             id="heading"/>
       <br>
       <label for="body">Текст поста</label>
-      <input class="bodyFormSize" type="text" th:field="*{body}" id="body" style="width: 300px; height: 200px;"/>
+      <input class="bodyFormSize"
+             type="text" th:field="*{body}"
+             id="body"/>
+      <br>
+      <label for="tags">Теги (через запятую)</label>
+      <input type="text"
+             th:field="*{tagsInString}"
+             id="tags"/>
       <br>
       <input type="submit" value="Опубликовать"/>
     </form>
+
     <script>
       document.getElementById('toggleFormButton').addEventListener('click', function() {
         var form = document.getElementById('editForm');

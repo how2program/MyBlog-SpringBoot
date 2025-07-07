@@ -2,6 +2,7 @@ package ru.dima.myblog.model;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -12,22 +13,24 @@ public class Post {
     private String body;
     private Blob image;
     private long likes;
-//    private ArrayList<String> comments = new ArrayList<>();
-//    private ArrayList<String> tags = new ArrayList<>();
+    private List<Tag> tags;
+    private String tagsInString;
 
-//    public ArrayList<String> getTags() {
-//        return tags;
-//    }
+//    private ArrayList<Commentary> comments = new ArrayList<>();
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 //
-//    public void setTags(ArrayList<String> tags) {
-//        this.tags = tags;
-//    }
-//
-//    public ArrayList<String> getComments() {
+//    public List<Commentary> getComments() {
 //        return comments;
 //    }
 //
-//    public void setComments(ArrayList<String> comments) {
+//    public void setComments(List<Commentary> comments) {
 //        this.comments = comments;
 //    }
 
@@ -71,5 +74,11 @@ public class Post {
         this.likes = likes;
     }
 
+    public String getTagsInString() {
+        return tagsInString;
+    }
 
+    public void setTagsInString(String tagsInString) {
+        this.tagsInString = tagsInString;
+    }
 }
