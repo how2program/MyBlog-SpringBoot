@@ -57,4 +57,11 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    @PostMapping(value = "/{id}", params = "_method=patch")
+    public String updatePost(@PathVariable(name = "id") long id,
+                             @ModelAttribute("post") Post updatedPost) {
+        postManagerService.update(id, updatedPost);
+        return "redirect:/posts";
+    }
+
 }

@@ -35,6 +35,11 @@ public class PostManagerServiceImpl implements PostManagerService {
     }
 
     @Override
+    public void update(long id, Post updatedPost) {
+        postManagerDao.update(id, updatedPost);
+    }
+
+    @Override
     public void deleteById(long id) {
         postManagerDao.deleteById(id);
     }

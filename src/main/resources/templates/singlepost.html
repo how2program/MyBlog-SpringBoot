@@ -22,11 +22,38 @@
         <br>
         <br>
         <br>
+        <br>
+        <br>
+        <button id="toggleFormButton">Редактировать пост</button>
+        <form id="editForm" th:method="POST" th:action="@{/posts/{id}(id = ${post.get().getId()})}"
+              th:object="${post}" style="display: none;">
+            <input type="hidden" name="_method" value="patch">
+            <label for="heading">Заголовок</label>
+            <input type="text" th:field="*{heading}" id="heading"/>
+            <br>
+            <label for="body">Текст поста</label>
+            <input type="text" th:field="*{body}" id="body"/>
+            <br>
+            <input type="submit" value="Отредактировать"/>
+        </form>
+        <script>
+            document.getElementById('toggleFormButton').addEventListener('click', function() {
+                var form = document.getElementById('editForm');
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
+            });
+        </script>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <form th:method="POST" th:action="@{/posts/{id}(id = ${post.get().getId()})}">
             <input type="hidden" name="_method" value="delete">
             <button type="submit">Удалить пост</button>
         </form>
-
-
     </body>
 </html>

@@ -37,7 +37,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
     @Override
     public Optional<Post> findById(long id) {
 
-        return jdbcTemplate.query("SELECT * FROM posts WHERE id = ?",
+        return jdbcTemplate.query("SELECT * FROM posts WHERE id=?",
                         new Object[]{id}, (rs, rowNum) -> {
             Post post = new Post();
             post.setId(rs.getLong("id"));
@@ -56,14 +56,15 @@ public class PostManagerDaoImpl implements PostManagerDao {
         jdbcTemplate.update("INSERT INTO posts (heading, body, image, likes) VALUES (?, ?, ?, ?)",
                 post.getHeading(), post.getBody(), post.getImage(), 0);
     }
-//
-//    @Override
-//    public void update(Post post) {
-//
-//    }
-//
+
+    @Override
+    public void update(long id, Post updatedPost) {
+        jdbcTemplate.update("UPDATE posts SET heading=?, body=?, image=? WHERE id=?",
+                updatedPost.getHeading(), updatedPost.getBody(), updatedPost.getImage(), id);
+    }
+
     @Override
     public void deleteById(long id) {
-        jdbcTemplate.update("DELETE FROM posts WHERE id = ?", id);
+        jdbcTemplate.update("DELETE FROM posts WHERE id=?", id);
     }
 }

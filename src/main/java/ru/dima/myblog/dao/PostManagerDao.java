@@ -12,8 +12,8 @@ public interface PostManagerDao {
     Optional<Post> findById(long id);
 
     void create(Post post);
-//
-//    void update(Post post);
-//
+
+    void update(long id, Post updatedPost);
+
     void deleteById(long id);
 }

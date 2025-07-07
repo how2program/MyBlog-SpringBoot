@@ -15,13 +15,13 @@
     </div>
 
     <form th:method="POST" th:action="@{/posts}" th:object="${postToCreate}">
-      <label for="heading">Heading</label>
+      <label for="heading">Заголовок</label>
       <input type="text" th:field="*{heading}" id="heading"/>
       <br>
-      <label for="body">Body</label>
+      <label for="body">Текст поста</label>
       <input type="text" th:field="*{body}" id="body"/>
       <br>
-      <input type="submit" value="POST"/>
+      <input type="submit" value="Опубликовать"/>
     </form>
 
   </body>
