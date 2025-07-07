@@ -33,4 +33,9 @@ public class PostManagerServiceImpl implements PostManagerService {
     public void create(Post post) {
         postManagerDao.create(post);
     }
+
+    @Override
+    public void deleteById(long id) {
+        postManagerDao.deleteById(id);
+    }
 }

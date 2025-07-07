@@ -9,18 +9,17 @@
   <body>
     <div th:each="post : ${posts}">
       <a th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
+      <p>&#9660; "Мне нравится"</p>
+      <p th:text="${post.getLikes()}">LIKES</p>
       <p th:text="${post.getBody()}">BODY</p>
     </div>
 
-    <form th:method="POST" th:action="@{/posts}" th:object="${postToCreate}" enctype="multipart/form-data">
+    <form th:method="POST" th:action="@{/posts}" th:object="${postToCreate}">
       <label for="heading">Heading</label>
       <input type="text" th:field="*{heading}" id="heading"/>
       <br>
       <label for="body">Body</label>
       <input type="text" th:field="*{body}" id="body"/>
-      <br>
-      <label for="image">Image</label>
-      <input type="file" th:field="*{image}" accept="image/*" id="image"/>
       <br>
       <input type="submit" value="POST"/>
     </form>

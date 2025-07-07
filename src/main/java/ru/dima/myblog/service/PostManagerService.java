@@ -15,6 +15,6 @@ public interface PostManagerService {
 //
 //    void update(Post post);
 //
-//    void deleteById(long id);
+    void deleteById(long id);
 
 }

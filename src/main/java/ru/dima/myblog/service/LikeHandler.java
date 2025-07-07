@@ -9,12 +9,10 @@ import ru.dima.myblog.model.Post;
 @Service
 public class LikeHandler implements Likeable {
 
-    PostManagerDao postManagerDao;
     LikeableDao likeHandlerDao;
 
     @Autowired
-    public LikeHandler(PostManagerDao postManagerDao, LikeableDao likeHandlerDao) {
-        this.postManagerDao = postManagerDao;
+    public LikeHandler(LikeableDao likeHandlerDao) {
         this.likeHandlerDao = likeHandlerDao;
     }
 

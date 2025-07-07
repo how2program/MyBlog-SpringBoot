@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.dima.myblog.model.Post;
 import ru.dima.myblog.service.Likeable;
 import ru.dima.myblog.service.PostManagerService;
-import ru.dima.myblog.service.PostManagerServiceImpl;
 
 @Controller
 @RequestMapping("/posts")
@@ -52,5 +51,10 @@ public class PostController {
         return "redirect:/posts/" + postId;
     }
 
+    @PostMapping(value = "/{id}", params = "_method=delete")
+    public String deletePost(@PathVariable(name = "id") long id) {
+        postManagerService.deleteById(id);
+        return "redirect:/posts";
+    }
 
 }

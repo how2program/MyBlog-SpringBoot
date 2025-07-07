@@ -19,6 +19,13 @@
             <button type="submit">"Мне нравится"</button>
         </form>
         <a th:text="${post.get().getLikes()}">LIKES</a>
+        <br>
+        <br>
+        <br>
+        <form th:method="POST" th:action="@{/posts/{id}(id = ${post.get().getId()})}">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit">Удалить пост</button>
+        </form>
 
 
     </body>
