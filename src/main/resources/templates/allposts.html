@@ -5,12 +5,32 @@
   <head>
     <meta charset="UTF-8">
     <title>Available posts</title>
+    <style>
+      #feedHeading {
+        color: rgba(43, 20, 255, 0.96);
+        font-size: 25px;
+        font-family: Bahnschrift;
+      }
+      #iLike {
+        color: red;
+        font-size: 30px;
+      }
+      .onOneLine {
+        display: inline-block;
+      }
+    </style>
   </head>
   <body>
+
     <div th:each="post : ${posts}">
-      <a th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
-      <p>&#9660; "Мне нравится"</p>
-      <p th:text="${post.getLikes()}">LIKES</p>
+      <a id="feedHeading"
+         th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
+      <br>
+      <p class="onOneLine"
+         id="iLike">&#10084;</p>
+      <p class="onOneLine"
+         id="likesNum"
+         th:text="${post.getLikes()}">LIKES</p>
       <p th:text="${post.getBody()}">BODY</p>
     </div>
 
