@@ -9,7 +9,7 @@ import ru.dima.myblog.model.Post;
 @Service
 public class LikeHandler implements Likeable {
 
-    LikeableDao likeHandlerDao;
+    private final LikeableDao likeHandlerDao;
 
     @Autowired
     public LikeHandler(LikeableDao likeHandlerDao) {

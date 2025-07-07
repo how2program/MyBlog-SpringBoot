@@ -11,12 +11,12 @@ CREATE TABLE IF NOT EXISTS posts (
     post_id BIGINT REFERENCES posts(id) ON DELETE SET NULL,
     tag VARCHAR(20) NOT NULL
 );
---
--- CREATE TABLE IF NOT EXISTS commentaries (
---     id BIGINT PRIMARY KEY AUTO_INCREMENT,
---     post_id BIGINT NOT NULL REFERENCES posts(id) ON DELETE SET NULL,
---     text VARCHAR(50)
--- );
+
+CREATE TABLE IF NOT EXISTS commentaries (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    post_id BIGINT NOT NULL REFERENCES posts(id) ON DELETE SET NULL,
+    text VARCHAR(50)
+);
 
 INSERT INTO posts(heading, body) VALUES ('What is Lorem Ipsum?', 'What is Lorem Ipsum?
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s ' ||

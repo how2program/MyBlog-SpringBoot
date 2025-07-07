@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class PostManagerServiceImpl implements PostManagerService {
 
-    PostManagerDao postManagerDao;
+    private final PostManagerDao postManagerDao;
 
     @Autowired
     public PostManagerServiceImpl(PostManagerDao postManagerDao) {

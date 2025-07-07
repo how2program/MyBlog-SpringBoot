@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.dima.myblog.model.Commentary;
 import ru.dima.myblog.model.Post;
+import ru.dima.myblog.service.CommentaryManagerService;
 import ru.dima.myblog.service.Likeable;
 import ru.dima.myblog.service.PostManagerService;
 import ru.dima.myblog.service.TagManagerService;
@@ -15,17 +17,20 @@ public class PostController {
 
     private static long currentPostId = 4;
 
-    PostManagerService postManagerService;
-    TagManagerService tagManagerService;
-    Likeable likeHandler;
+    private final PostManagerService postManagerService;
+    private final TagManagerService tagManagerService;
+    private final CommentaryManagerService commentaryManagerService;
+    private final Likeable likeHandler;
 
     @Autowired
     public PostController(PostManagerService postManagerService,
                           Likeable likeHandler,
-                          TagManagerService tagManagerService) {
+                          TagManagerService tagManagerService,
+                          CommentaryManagerService commentaryManagerService) {
         this.postManagerService = postManagerService;
         this.likeHandler = likeHandler;
         this.tagManagerService = tagManagerService;
+        this.commentaryManagerService = commentaryManagerService;
     }
 
     @GetMapping
@@ -43,6 +48,11 @@ public class PostController {
     @ModelAttribute(name = "postToCreate")
     public Post postObjectInitializer() {
         return new Post();
+    }
+
+    @ModelAttribute(name = "commentary")
+    public Commentary commentaryObjectInitializer() {
+        return new Commentary();
     }
 
     @PostMapping
@@ -72,6 +82,12 @@ public class PostController {
                              @ModelAttribute("post") Post updatedPost) {
         postManagerService.update(id, updatedPost);
         return "redirect:/posts";
+    }
+
+    @PostMapping(value = "/comment/{postId}")
+    public String comment(@PathVariable long postId, @ModelAttribute(name = "commentary") Commentary commentary) {
+        commentaryManagerService.createCommentary(postId, commentary);
+        return "redirect:/posts/" + postId;
     }
 
 }

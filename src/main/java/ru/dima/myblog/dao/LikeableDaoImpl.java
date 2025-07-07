@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public class LikeableDaoImpl implements LikeableDao {
 
-    JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public LikeableDaoImpl(JdbcTemplate jdbcTemplate) {

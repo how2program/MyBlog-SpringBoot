@@ -7,14 +7,6 @@ import java.util.Optional;
 
 public interface CommentaryManagerDao {
 
-    List<Commentary> findAll();
-
-    Optional<Commentary> findById(long id);
-
-    void create(Commentary post);
-
-    void update(Commentary post);
-
-    void deleteById(long id);
+    void createCommentary(long id, Commentary commentary);
 
 }

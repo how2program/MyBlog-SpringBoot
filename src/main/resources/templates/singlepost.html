@@ -83,6 +83,9 @@
         <br>
         <br>
         <br>
+        <form th:method=":POTS" th:action="@{/posts/comment/{id}(id = ${post.get().getId()})}" th:object="commentary">
+
+        </form>
         <br>
         <br>
         <button id="toggleFormButton">Редактировать пост</button>
