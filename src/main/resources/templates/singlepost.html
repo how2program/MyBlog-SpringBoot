@@ -75,8 +75,11 @@
                th:text="${post.get().getLikes()}">LIKES</a>
         </form>
 
-        <div th:each="oneTag : ${post.get().getTags()}">
-            <p th:text="${oneTag.getTag()}">HEADING</div>
+
+        <p id="tagsLabel">Теги:</p>
+        <div class="tags">
+            <p th:text = "${post.get().getTags()}">TAGS</p>
+        </div>
         <br>
         <br>
         <br>

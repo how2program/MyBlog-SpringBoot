@@ -49,6 +49,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setBody(rs.getString("body"));
             post.setImage(rs.getBlob("image"));
             post.setLikes(rs.getLong("likes"));
+            post.setTags(tagManagerDao.findAllTagsToPost(id));
             return post;
         })
                 .stream()
