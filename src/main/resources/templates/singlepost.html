@@ -122,7 +122,15 @@
             <a th:href="@{/posts/{postId}/commentary/{commentaryId}/edit
             (postId = ${comment.getPostId()}, commentaryId=${comment.getId()})}"
                th:text="${comment.getText}">COMMENTARY TEXT</a>
+            <form th:method="POST" th:action="@{/posts/{postId}/commentary/{commentaryId}
+                                    (postId=${comment.getPostId()}, commentaryId=${comment.getId()})}">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit">Удалить комментарий</button>
+            </form>
         </div>
+
+
+
         <br>
         <br>
         <br>

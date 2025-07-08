@@ -114,4 +114,11 @@ public class PostController {
         return "redirect:/posts/" + postId;
     }
 
+    @PostMapping(value ="/{postId}/commentary/{commentaryId}", params = "_method=delete")
+    public String deleteCommentary(@PathVariable(name = "postId") long postId,
+                                   @PathVariable(name = "commentaryId") long commentaryId) {
+        commentaryManagerService.deleteCommentary(postId, commentaryId);
+        return "redirect:/posts/" + postId;
+    }
+
 }

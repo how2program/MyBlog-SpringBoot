@@ -33,4 +33,9 @@ public class CommentaryManagerServiceImpl implements CommentaryManagerService {
     public void updateCommentary(long postId, long commentaryId, Commentary updatedCommentary) {
         commentaryManagerDao.updateCommentary(postId, commentaryId, updatedCommentary);
     }
+
+    @Override
+    public void deleteCommentary(long postId, long commentaryId) {
+        commentaryManagerDao.deleteCommentary(postId, commentaryId);
+    }
 }

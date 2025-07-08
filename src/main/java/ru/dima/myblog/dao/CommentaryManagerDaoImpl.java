@@ -58,4 +58,9 @@ public class CommentaryManagerDaoImpl implements CommentaryManagerDao {
                 updatedCommentary.getText(), postId, commentaryId);
     }
 
+    @Override
+    public void deleteCommentary(long postId, long commentaryId) {
+        jdbcTemplate.update("DELETE FROM commentaries WHERE post_id=? AND id=?", postId, commentaryId);
+    }
+
 }

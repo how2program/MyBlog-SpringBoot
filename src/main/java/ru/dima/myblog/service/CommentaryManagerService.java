@@ -10,4 +10,6 @@ public interface CommentaryManagerService {
     Optional<Commentary> findCommentaryByPostAndCommentaryId(long postId, long commentaryId);
 
     void updateCommentary(long postId, long commentaryId, Commentary updatedCommentary);
+
+    void deleteCommentary(long postId, long commentaryId);
 }
