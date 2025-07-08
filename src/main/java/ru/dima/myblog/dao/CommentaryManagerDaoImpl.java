@@ -7,6 +7,7 @@ import ru.dima.myblog.model.Commentary;
 import ru.dima.myblog.model.Post;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CommentaryManagerDaoImpl implements CommentaryManagerDao {
@@ -34,8 +35,27 @@ public class CommentaryManagerDaoImpl implements CommentaryManagerDao {
             commentary.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
             return commentary;
     }, postId);
-
-
-
     }
+
+    @Override
+    public Optional<Commentary> findCommentaryByPostAndCommentaryId(long postId, long commentaryId) {
+        return jdbcTemplate.query("SELECT * FROM commentaries WHERE post_id=? AND id=?",
+                new Object[]{postId, commentaryId}, (rs, rowNum) -> {
+            Commentary commentary = new Commentary();
+            commentary.setId(rs.getLong("id"));
+            commentary.setPostId(rs.getLong("post_id"));
+            commentary.setText(rs.getString("text"));
+            commentary.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
+            return commentary;
+                })
+                .stream()
+                .findAny();
+    }
+
+    @Override
+    public void updateCommentary(long postId, long commentaryId, Commentary updatedCommentary) {
+        jdbcTemplate.update("UPDATE commentaries SET text=? WHERE post_id=? AND id=?",
+                updatedCommentary.getText(), postId, commentaryId);
+    }
+
 }

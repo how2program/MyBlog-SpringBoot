@@ -83,11 +83,28 @@ public class PostController {
         return "redirect:/posts/" + id;
     }
 
-    @PostMapping(value = "/commentary/{postId}")
+    @PostMapping(value = "/{postId}/commentary")
     public String createCommentary(@PathVariable long postId,
                                    @ModelAttribute(name = "commentary") Commentary commentary,
                                    Model model) {
         commentaryManagerService.createCommentary(postId, commentary);
+        return "redirect:/posts/" + postId;
+    }
+
+    @GetMapping("/{postId}/commentary/{commentaryId}/edit")
+    public String editCommentaryForm(@PathVariable(name = "postId") long postId,
+                                     @PathVariable(name = "commentaryId") long commentaryId,
+                                     Model model) {
+        model.addAttribute("commentToUpdate",
+                commentaryManagerService.findCommentaryByPostAndCommentaryId(postId, commentaryId).get());
+        return "changeCommentaryForm";
+    }
+
+    @PostMapping(value ="/{postId}/commentary/{commentaryId}/new", params = "_method=patch")
+    public String updateCommentary(@PathVariable(name = "postId") long postId,
+                                 @PathVariable(name = "commentaryId") long commentaryId,
+                                   @ModelAttribute("commentToUpdate") Commentary updatedCommentary) {
+        commentaryManagerService.updateCommentary(postId, commentaryId, updatedCommentary);
         return "redirect:/posts/" + postId;
     }
 

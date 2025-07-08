@@ -6,6 +6,7 @@ import ru.dima.myblog.dao.CommentaryManagerDao;
 import ru.dima.myblog.model.Commentary;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class CommentaryManagerServiceImpl implements CommentaryManagerService {
@@ -21,5 +22,15 @@ public class CommentaryManagerServiceImpl implements CommentaryManagerService {
     public void createCommentary(long postId, Commentary commentary) {
         commentary.setLocalDateTime(LocalDateTime.now());
         commentaryManagerDao.createCommentary(postId, commentary);
+    }
+
+    @Override
+    public Optional<Commentary> findCommentaryByPostAndCommentaryId(long postId, long commentaryId) {
+        return commentaryManagerDao.findCommentaryByPostAndCommentaryId(postId, commentaryId);
+    }
+
+    @Override
+    public void updateCommentary(long postId, long commentaryId, Commentary updatedCommentary) {
+        commentaryManagerDao.updateCommentary(postId, commentaryId, updatedCommentary);
     }
 }
