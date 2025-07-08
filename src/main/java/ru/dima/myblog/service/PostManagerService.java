@@ -1,7 +1,10 @@
 package ru.dima.myblog.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import ru.dima.myblog.model.Post;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +14,7 @@ public interface PostManagerService {
 
     Optional<Post> findById(long id);
 
-    void create(Post post);
+    void create(Post post) throws IOException, SQLException;
 
     void update(long id, Post updatedPost);
 

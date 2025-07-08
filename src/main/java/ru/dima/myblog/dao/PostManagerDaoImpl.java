@@ -37,6 +37,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setTags(tagManagerDao.findAllTagsToPost(postId));
             post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
             post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
+            post.setImage(rs.getBlob("image"));
             return post;
         });
     }
@@ -55,6 +56,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setTags(tagManagerDao.findAllTagsToPost(id));
             post.setCommentaries(commentaryManagerDao.findAllCommentaries(id));
             post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
+            post.setImage(rs.getBlob("image"));
             return post;
         })
                 .stream()

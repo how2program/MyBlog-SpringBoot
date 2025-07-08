@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <title>Available posts</title>
     <style>
-      body {
+      #overBody {
         display: flex;
         justify-content: center;
-        align-items: center;
-        height: 100vh;
+        align-items: flex-start;
+        height: auto;
       }
       .feedHeading {
         color: rgba(43, 20, 255, 0.96);
@@ -75,6 +75,7 @@
   </head>
 
   <body>
+  <div id="overBody">
 
   <div class="ALLOBJECTS">
 
@@ -112,7 +113,9 @@
 
     <button id="toggleFormButton">Создать пост</button>
 
-    <form id="editForm" th:method="POST" th:action="@{/posts}" th:object="${postToCreate}" style="display: none;">
+    <form id="editForm" th:method="POST" th:action="@{/posts}" style="display: none;">
+
+      <div th:object="${postToCreate}">
       <label for="heading">Заголовок</label>
       <input class="headingFormSize"
              type="text" th:field="*{heading}"
@@ -127,7 +130,9 @@
       <input type="text"
              th:field="*{tagsInString}"
              id="tags"/>
+      </div>
       <br>
+<!--      <input type="file" name="image" accept=".jpg"/>-->
       <input type="submit" value="Опубликовать"/>
     </form>
 
@@ -145,6 +150,6 @@
   </div>
 
 
-
+  </div>
   </body>
 </html>

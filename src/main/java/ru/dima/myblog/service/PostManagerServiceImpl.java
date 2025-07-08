@@ -2,11 +2,15 @@ package ru.dima.myblog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.dima.myblog.dao.PostManagerDao;
 import ru.dima.myblog.model.Post;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +36,7 @@ public class PostManagerServiceImpl implements PostManagerService {
     }
 
     @Override
-    public void create(Post post) {
+    public void create(Post post) throws IOException, SQLException {
         post.setLocalDateTime(LocalDateTime.now());
         postManagerDao.create(post);
     }

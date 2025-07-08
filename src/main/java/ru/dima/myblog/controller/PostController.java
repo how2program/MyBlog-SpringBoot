@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.dima.myblog.model.Commentary;
 import ru.dima.myblog.model.Post;
 import ru.dima.myblog.service.CommentaryManagerService;
 import ru.dima.myblog.service.Likeable;
 import ru.dima.myblog.service.PostManagerService;
 import ru.dima.myblog.service.TagManagerService;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/posts")
@@ -57,7 +61,9 @@ public class PostController {
     }
 
     @PostMapping
-    public String createPost(@ModelAttribute(name = "postToCreate") Post post) throws InterruptedException {
+    public String createPost(@ModelAttribute(name = "postToCreate") Post post
+                             /*@RequestParam(name = "image") MultipartFile imageFile */) throws IOException, SQLException {
+
         postManagerService.create(post);
         tagManagerService.create(post.getTagsInString(), currentPostId);
         currentPostId++;

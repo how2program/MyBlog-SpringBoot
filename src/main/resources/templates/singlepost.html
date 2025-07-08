@@ -72,6 +72,9 @@
                 max-width: 450px;
                 word-wrap: break-word;
             }
+            .whyIsThisNotDefault {
+                display: inline-block;
+            }
         </style>
     </head>
 
@@ -111,7 +114,9 @@
             <input type="submit" value="Оставить комментарий"/>
         </form>
 
-        <p>Комментарии:</p>
+        <p class="whyIsThisNotDefault">Комментарии (</p>
+        <p class="whyIsThisNotDefault" th:text="${commentaries.size()}">COMMENTARY_AMOUNT</p>
+        <p class="whyIsThisNotDefault">) :</p>
         <div class="commentTextFormat" th:each="comment : ${commentaries}">
             <p id="commentTime" th:text="${comment.getLocalDateTime()}">TIME</p>
             <a th:href="@{/posts/{postId}/commentary/{commentaryId}/edit
