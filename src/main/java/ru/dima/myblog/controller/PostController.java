@@ -66,7 +66,6 @@ public class PostController {
     @PostMapping("/like/{postId}")
     public String like(@PathVariable long postId, Model model) {
         likeHandler.like(postId);
-        model.addAttribute("post", postManagerService.findById(postId));
         return "redirect:/posts/" + postId;
     }
 
@@ -80,7 +79,7 @@ public class PostController {
     public String updatePost(@PathVariable(name = "id") long id,
                              @ModelAttribute("post") Post updatedPost) {
         postManagerService.update(id, updatedPost);
-        return "redirect:/posts";
+        return "redirect:/posts/" + id;
     }
 
     @PostMapping(value = "/commentary/{postId}")
@@ -88,7 +87,6 @@ public class PostController {
                                    @ModelAttribute(name = "commentary") Commentary commentary,
                                    Model model) {
         commentaryManagerService.createCommentary(postId, commentary);
-        model.addAttribute("commentary", postManagerService.findById(postId));
         return "redirect:/posts/" + postId;
     }
 
