@@ -20,8 +20,8 @@ public class CommentaryManagerDaoImpl implements CommentaryManagerDao {
 
     @Override
     public void createCommentary(long postId, Commentary commentary) {
-        jdbcTemplate.update("INSERT INTO commentaries(post_id, text) VALUES (?, ?)",
-                postId, commentary.getText());
+        jdbcTemplate.update("INSERT INTO commentaries(post_id, text, creation_timestamp) VALUES (?, ?, ?)",
+                postId, commentary.getText(), commentary.getLocalDateTime());
     }
 
     @Override
@@ -31,6 +31,7 @@ public class CommentaryManagerDaoImpl implements CommentaryManagerDao {
             commentary.setId(rs.getLong("id"));
             commentary.setPostId(rs.getLong("post_id"));
             commentary.setText(rs.getString("text"));
+            commentary.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
             return commentary;
     }, postId);
 

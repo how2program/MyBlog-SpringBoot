@@ -36,6 +36,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setLikes(rs.getLong("likes"));
             post.setTags(tagManagerDao.findAllTagsToPost(postId));
             post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
+            post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
             return post;
         });
     }
@@ -53,6 +54,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setLikes(rs.getLong("likes"));
             post.setTags(tagManagerDao.findAllTagsToPost(id));
             post.setCommentaries(commentaryManagerDao.findAllCommentaries(id));
+            post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
             return post;
         })
                 .stream()
@@ -61,8 +63,8 @@ public class PostManagerDaoImpl implements PostManagerDao {
 
     @Override
     public void create(Post post) {
-        jdbcTemplate.update("INSERT INTO posts (heading, body, image, likes) VALUES (?, ?, ?, ?)",
-                post.getHeading(), post.getBody(), post.getImage(), 0);
+        jdbcTemplate.update("INSERT INTO posts (heading, body, image, likes, creation_timestamp) VALUES (?, ?, ?, ?, ?)",
+                post.getHeading(), post.getBody(), post.getImage(), 0, post.getLocalDateTime());
     }
 
     @Override

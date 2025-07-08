@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.dima.myblog.dao.CommentaryManagerDao;
 import ru.dima.myblog.model.Commentary;
 
+import java.time.LocalDateTime;
+
 @Service
 public class CommentaryManagerServiceImpl implements CommentaryManagerService {
 
@@ -17,6 +19,7 @@ public class CommentaryManagerServiceImpl implements CommentaryManagerService {
 
     @Override
     public void createCommentary(long postId, Commentary commentary) {
+        commentary.setLocalDateTime(LocalDateTime.now());
         commentaryManagerDao.createCommentary(postId, commentary);
     }
 }

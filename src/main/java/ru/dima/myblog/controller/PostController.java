@@ -42,6 +42,7 @@ public class PostController {
     @GetMapping("/{id}")
     public String showOnePost(Model model, @PathVariable(name = "id") long id) {
         model.addAttribute("post", postManagerService.findById(id));
+        model.addAttribute("commentaries", postManagerService.findById(id).get().getCommentaries());
         return "singlepost";
     }
 

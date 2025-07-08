@@ -1,5 +1,6 @@
 package ru.dima.myblog.model;
 import java.sql.Blob;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Post {
     private List<Tag> tags;
     private String tagsInString;
     private List<Commentary> comments = new ArrayList<>();
+    private LocalDateTime localDateTime;
 
     public long getId() {
         return id;
@@ -79,5 +81,11 @@ public class Post {
         this.comments = comments;
     }
 
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
 
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
 }

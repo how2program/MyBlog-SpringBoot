@@ -1,11 +1,13 @@
 package ru.dima.myblog.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 public class Commentary {
 
     private long id;
     private long postId;
     private String text;
+    private LocalDateTime localDateTime;
 
     public long getId() {
         return id;
@@ -29,6 +31,14 @@ public class Commentary {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     @Override

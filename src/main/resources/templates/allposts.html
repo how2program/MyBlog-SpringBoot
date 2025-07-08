@@ -58,6 +58,12 @@
         font-style: italic;
         color: #708090;
       }
+      #time {
+        font-size: 15px;
+        font-style:italic;
+        color: #8b0000;
+        text-indent: 0;
+      }
     </style>
   </head>
 
@@ -74,6 +80,8 @@
       <br>
       <p class="textFormat"
          th:text="${post.getBody()}">BODY</p>
+
+      <p id="time" th:text="${post.getLocalDateTime()}">TIME</p>
 
       <p class="onOneLine"
          id="iLike">&#10084;</p>

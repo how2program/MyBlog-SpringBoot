@@ -55,6 +55,18 @@
                 height: 100px;
                 width: 400px;
             }
+            #time {
+                font-size: 15px;
+                font-style:italic;
+                color: #8b0000;
+                text-indent: 0;
+            }
+            #commentTime {
+                font-size: 12px;
+                font-style:italic;
+                color: darkred;
+                text-indent: 0;
+            }
         </style>
     </head>
 
@@ -66,6 +78,7 @@
             th:text="${post.get().getHeading()}">HEADING</h1>
         <br>
         <br>
+        <p id="time" th:text="${post.get().getLocalDateTime()}">TIME</p>
         <p class="textFormat"
            th:text="${post.get().getBody()}">BODY</p>
         <br>
@@ -94,8 +107,10 @@
         </form>
 
         <p>Комментарии:</p>
-        <p th:text="${post.get().getCommentaries()}">COMMENTS</p>
-
+        <div th:each="comment : ${commentaries}">
+            <p id="commentTime" th:text="${comment.getLocalDateTime()}">TIME</p>
+            <p th:text="${comment.getText}">COMMENTARY TEXT</p>
+        </div>
         <br>
         <br>
         <br>
