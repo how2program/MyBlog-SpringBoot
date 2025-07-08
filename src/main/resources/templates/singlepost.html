@@ -67,6 +67,11 @@
                 color: darkred;
                 text-indent: 0;
             }
+            .commentTextFormat {
+                width: 450px;
+                max-width: 450px;
+                word-wrap: break-word;
+            }
         </style>
     </head>
 
@@ -107,7 +112,7 @@
         </form>
 
         <p>Комментарии:</p>
-        <div th:each="comment : ${commentaries}">
+        <div class="commentTextFormat" th:each="comment : ${commentaries}">
             <p id="commentTime" th:text="${comment.getLocalDateTime()}">TIME</p>
             <a th:href="@{/posts/{postId}/commentary/{commentaryId}/edit
             (postId = ${comment.getPostId()}, commentaryId=${comment.getId()})}"

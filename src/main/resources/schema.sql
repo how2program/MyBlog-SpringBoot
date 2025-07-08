@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS posts (
 CREATE TABLE IF NOT EXISTS commentaries (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     post_id BIGINT NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
-    text VARCHAR(50),
+    text VARCHAR(150),
     creation_timestamp TIMESTAMP NOT NULL
 );
 

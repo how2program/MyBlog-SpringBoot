@@ -64,6 +64,13 @@
         color: #8b0000;
         text-indent: 0;
       }
+      #iComment {
+        color: blue;
+        font-size: 30px;
+      }
+      .onOneLineComments {
+        display: inline-block;
+      }
     </style>
   </head>
 
@@ -88,7 +95,14 @@
 
       <p class="onOneLine"
          id="likesNum"
-         th:text="${post.getLikes()}">LIKES</p>
+         th:text="${post.getLikes()}">LIKES_AMOUNT</p>
+
+      <p class="onOneLineComments"
+         id="iComment">&#9998;</p>
+
+      <p class="onOneLineComments"
+         id="commentsNum"
+         th:text="${post.getCommentaries().size()}">COMMENTARIES_AMOUNT</p>
 
       <p id="tagsLabel">Теги:</p>
       <div class="tags">
