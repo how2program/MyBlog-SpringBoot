@@ -1,28 +1,17 @@
 package ru.dima.myblog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.MediaType;
-import ru.dima.myblog.dao.PaginatorDao;
+import ru.dima.myblog.dao.PaginatorDaoImpl;
 import ru.dima.myblog.model.Commentary;
 import ru.dima.myblog.model.Post;
-import ru.dima.myblog.service.CommentaryManagerService;
-import ru.dima.myblog.service.Likeable;
-import ru.dima.myblog.service.PostManagerService;
-import ru.dima.myblog.service.TagManagerService;
+import ru.dima.myblog.service.*;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/posts")
@@ -34,35 +23,35 @@ public class PostController {
     private final TagManagerService tagManagerService;
     private final CommentaryManagerService commentaryManagerService;
     private final Likeable likeHandler;
-    private final PaginatorDao paginatorDao;
+    private final PaginatorService paginatorService;
 
     @Autowired
     public PostController(PostManagerService postManagerService,
                           Likeable likeHandler,
                           TagManagerService tagManagerService,
-                          CommentaryManagerService commentaryManagerService, PaginatorDao paginatorDao) {
+                          CommentaryManagerService commentaryManagerService, PaginatorService paginatorService) {
         this.postManagerService = postManagerService;
         this.likeHandler = likeHandler;
         this.tagManagerService = tagManagerService;
         this.commentaryManagerService = commentaryManagerService;
-        this.paginatorDao = paginatorDao;
+        this.paginatorService = paginatorService;
     }
 
     @GetMapping
-    public String showAllPosts(Model model) {
-        model.addAttribute("posts", postManagerService.findAll());
+    public String listPosts(@RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "10") int size,
+                            Model model) {
+        int offset = page * size;
+        List<Post> posts = paginatorService.findPostsPage(offset, size);
+        long totalPosts = paginatorService.countPosts();
+
+        int totalPages = (int) Math.ceil((double) totalPosts / size);
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         return "allposts";
     }
-
-//    @GetMapping В ПРОЦЕССЕ
-//    public String showAllPosts(@RequestParam(value = "page", defaultValue = "1") int page,
-//                               Model model) {
-//        int offset = (page - 1) * PAGE_SIZE;
-//        int totalPosts = postManagerService.findAll().size();
-//        int totalPages = (int) Math.ceil((double) totalPosts / PAGE_SIZE);
-//
-//        model.addAttribute("posts", paginatorDao.getAllPostsByPage(offset, PAGE_SIZE))
-//    }
 
     @GetMapping("/{id}")
     public String showOnePost(Model model, @PathVariable(name = "id") long id) {
@@ -88,7 +77,7 @@ public class PostController {
             post.setImage(imageBytes);
             long currentPostId = postManagerService.create(post);
             tagManagerService.create(post.getTagsInString(), currentPostId);
-            return "redirect:/posts";
+            return "redirect:/posts/" + currentPostId;
     }
 
     @PostMapping("/like/{postId}")
@@ -105,7 +94,10 @@ public class PostController {
 
     @PostMapping(value = "/{id}", params = "_method=patch")
     public String updatePost(@PathVariable(name = "id") long id,
-                             @ModelAttribute("post") Post updatedPost) {
+                             @ModelAttribute("post") Post updatedPost,
+                             @RequestParam("myImage") MultipartFile myImage) throws IOException {
+        byte[] imageBytes = myImage.getBytes();
+        updatedPost.setImage(imageBytes);
         postManagerService.update(id, updatedPost);
         return "redirect:/posts/" + id;
     }

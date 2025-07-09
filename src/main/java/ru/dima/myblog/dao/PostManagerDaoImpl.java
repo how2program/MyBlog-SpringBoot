@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.RowMapper;
+import ru.dima.myblog.mappers.PostRowMapper;
 import ru.dima.myblog.model.Post;
 
 import java.sql.Connection;
@@ -36,37 +37,14 @@ public class PostManagerDaoImpl implements PostManagerDao {
 
     @Override
     public List<Post> findAll() {
-        return jdbcTemplate.query("SELECT * FROM posts", (rs, rowNum) -> {
-            Post post = new Post();
-            long postId = rs.getLong("id");
-            post.setId(postId);
-            post.setHeading(rs.getString("heading"));
-            post.setBody(rs.getString("body"));
-            post.setImage(rs.getBytes("image"));
-            post.setLikes(rs.getLong("likes"));
-            post.setTags(tagManagerDao.findAllTagsToPost(postId));
-            post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
-            post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
-            return post;
-        });
+        return jdbcTemplate.query("SELECT * FROM posts", PostRowMapper::mapRowToPost);
     }
 
     @Override
     public Optional<Post> findById(long id) {
 
         return jdbcTemplate.query("SELECT * FROM posts WHERE id=?",
-                        new Object[]{id}, (rs, rowNum) -> {
-            Post post = new Post();
-            post.setId(rs.getLong("id"));
-            post.setHeading(rs.getString("heading"));
-            post.setBody(rs.getString("body"));
-            post.setImage(rs.getBytes("image"));
-            post.setLikes(rs.getLong("likes"));
-            post.setTags(tagManagerDao.findAllTagsToPost(id));
-            post.setCommentaries(commentaryManagerDao.findAllCommentaries(id));
-            post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
-            return post;
-        })
+                        new Object[]{id}, PostRowMapper::mapRowToPost)
                 .stream()
                 .findAny();
     }
@@ -89,8 +67,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
                 return ps;
             }
         }, keyHolder);
-        Long generatedId = keyHolder.getKey().longValue();
-        return generatedId;
+        return keyHolder.getKey().longValue();
     }
 
     @Override
@@ -107,19 +84,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
     @Override
     public List<Post> findByTag(String tag) {
         return jdbcTemplate.query("SELECT posts.* FROM posts JOIN tags ON posts.id = tags.post_id WHERE tags.tag = ?",
-                new Object[]{tag}, (rs, rowNum) -> {
-                    Post post = new Post();
-                    long postId = rs.getLong("id");
-                    post.setId(postId);
-                    post.setHeading(rs.getString("heading"));
-                    post.setBody(rs.getString("body"));
-                    post.setImage(rs.getBytes("image"));
-                    post.setLikes(rs.getLong("likes"));
-                    post.setTags(tagManagerDao.findAllTagsToPost(postId));
-                    post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
-                    post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
-                    return post;
-                });
+                new Object[]{tag}, PostRowMapper::mapRowToPost);
     }
 
 }
