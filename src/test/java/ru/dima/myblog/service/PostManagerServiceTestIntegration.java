@@ -1,6 +1,8 @@
 package ru.dima.myblog.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -89,7 +91,7 @@ public class PostManagerServiceTestIntegration {
     }
 
     @Test
-    public void testUpdateIntregration() {
+    public void testUpdateIntegration() {
 
         Post originalPost = new Post();
         originalPost.setHeading("heading");
@@ -104,5 +106,43 @@ public class PostManagerServiceTestIntegration {
         Optional<Post> retrievedPost = postManagerDao.findById(id);
         assertNotNull(retrievedPost);
         assertEquals("newHeading", retrievedPost.get().getHeading());
+    }
+
+    @Test
+    public void testDeleteByIdIntegration() {
+        long id = 2;
+
+        Post testPost = new Post();
+        testPost.setHeading("heading");
+
+        postManagerService.deleteById(id);
+
+        Optional<Post> deletedPost = postManagerDao.findById(id);
+        assertThat(deletedPost).isEmpty();
+    }
+
+    @Test
+    public void testFindByTagIntegration() {
+        Tag tag = new Tag();
+        String tagText = "hello";
+        tag.setTag(tagText);
+
+        Post post = new Post();
+        post.setHeading("heading");
+        post.setBody("body");
+        post.setLocalDateTime(LocalDateTime.now());
+        post.setImage("image".getBytes());
+        post.setCommentaries(List.of(new Commentary(), new Commentary()));
+        post.setTags(List.of(tag));
+        post.setLikes(0);
+        postManagerDao.create(post);
+
+        List<Post> posts = postManagerService.findByTag(tag.toString());
+
+        assertNotNull(posts, "Результат не должен быть null");
+
+        for (Post onePost : posts) {
+            assertTrue(post.getTags().contains(tag), "Пост с id " + post.getId() + " содержит тег " + tag);
+        }
     }
 }

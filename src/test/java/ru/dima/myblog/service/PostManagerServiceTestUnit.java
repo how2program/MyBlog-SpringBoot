@@ -2,6 +2,7 @@ package ru.dima.myblog.service;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.dima.myblog.dao.PostManagerDao;
 import ru.dima.myblog.model.Post;
+import ru.dima.myblog.model.Tag;
 
 @ExtendWith(MockitoExtension.class)
 public class PostManagerServiceTestUnit {
@@ -77,5 +79,42 @@ public class PostManagerServiceTestUnit {
        postManagerServiceImpl.update(id, updatedPost);
 
         verify(postManagerDao, times(1)).update(id, updatedPost);
+    }
+
+    @Test
+    public void testDeleteById() {
+        long id = 123;
+
+        postManagerServiceImpl.deleteById(id);
+
+        verify(postManagerDao, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void testFindByTag() {
+        String tag = "java";
+        Tag tag1 = new Tag();
+        tag1.setTag("java");
+        Tag tag2 = new Tag();
+        tag2.setTag("it");
+        Tag tag3 = new Tag();
+        tag3.setTag("games");
+
+        Post post1 = new Post();
+        post1.setHeading("Java Post 1");
+        post1.setTags(List.of(tag1, tag2));
+
+        Post post2 = new Post();
+        post2.setHeading("Java Post 2");
+        post2.setTags(List.of(tag2, tag3));
+
+        List<Post> expectedPosts = List.of(post1, post2);
+
+        when(postManagerDao.findByTag(tag)).thenReturn(expectedPosts);
+
+        List<Post> result = postManagerServiceImpl.findByTag(tag);
+
+        assertThat(result).containsExactlyInAnyOrder(post1, post2);
+        verify(postManagerDao).findByTag(tag);
     }
 }
