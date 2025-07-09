@@ -16,4 +16,6 @@ public interface PostManagerDao {
     void update(long id, Post updatedPost);
 
     void deleteById(long id);
+
+    List<Post> findByTag(String tag);
 }

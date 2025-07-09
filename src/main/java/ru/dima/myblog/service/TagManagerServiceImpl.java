@@ -19,7 +19,7 @@ public class TagManagerServiceImpl implements TagManagerService {
     }
 
     private List<Tag> parseTags(String tags, long currentPostId) {
-        String[] splitTags = tags.split(",");
+        String[] splitTags = tags.split(", ");
         List<Tag> resultTags = new ArrayList<>();
         for (String tag : splitTags) {
             Tag anotherTag = new Tag();

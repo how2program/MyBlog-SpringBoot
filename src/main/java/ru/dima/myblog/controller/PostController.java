@@ -21,6 +21,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -109,6 +110,12 @@ public class PostController {
         return "redirect:/posts/" + id;
     }
 
-
+    @GetMapping("/filter")
+    public String filterPosts(@RequestParam(name = "myTag") String myTag,
+                              Model model) {
+        List<Post> filteredPosts = postManagerService.findByTag(myTag);
+        model.addAttribute("posts", filteredPosts);
+        return "allposts";
+    }
 
 }

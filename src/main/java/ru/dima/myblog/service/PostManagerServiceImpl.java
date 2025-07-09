@@ -50,4 +50,9 @@ public class PostManagerServiceImpl implements PostManagerService {
     public void deleteById(long id) {
         postManagerDao.deleteById(id);
     }
+
+    @Override
+    public List<Post> findByTag(String tag) {
+        return postManagerDao.findByTag(tag);
+    }
 }

@@ -71,6 +71,13 @@
       .onOneLineComments {
         display: inline-block;
       }
+      .filter {
+        position: fixed;
+        top: 50%;
+        left: 4%;
+        transform: translateY(-50%);
+        z-index: 1000;
+      }
     </style>
   </head>
 
@@ -113,12 +120,6 @@
 
     <button id="toggleFormButton">Создать пост</button>
 
-
-
-
-
-
-
     <form id="editForm" th:method="POST" th:action="@{/posts}" style="display: none;" enctype="multipart/form-data">
 
       <div th:object="${postToCreate}">
@@ -152,5 +153,13 @@
 
 
   </div>
+
+
+  <form class="filter" th:method="GET" th:action="@{/posts/filter}">
+    <label for="tagToType">Отфильтровать по тегу</label>
+    <input type="text" name="myTag" id="tagToType"/>
+    <input type="submit" value="Отфильтровать"/>
+  </form>
+
   </body>
 </html>

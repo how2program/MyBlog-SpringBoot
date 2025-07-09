@@ -20,4 +20,5 @@ public interface PostManagerService {
 
     void deleteById(long id);
 
+    List<Post> findByTag(String tag);
 }

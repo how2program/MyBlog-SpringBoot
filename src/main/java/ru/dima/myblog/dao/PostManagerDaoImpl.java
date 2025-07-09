@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.core.RowMapper;
 import ru.dima.myblog.model.Post;
 
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
+
 
 @Repository
 public class PostManagerDaoImpl implements PostManagerDao {
@@ -101,4 +103,23 @@ public class PostManagerDaoImpl implements PostManagerDao {
     public void deleteById(long id) {
         jdbcTemplate.update("DELETE FROM posts WHERE id=?", id);
     }
+
+    @Override
+    public List<Post> findByTag(String tag) {
+        return jdbcTemplate.query("SELECT posts.* FROM posts JOIN tags ON posts.id = tags.post_id WHERE tags.tag = ?",
+                new Object[]{tag}, (rs, rowNum) -> {
+                    Post post = new Post();
+                    long postId = rs.getLong("id");
+                    post.setId(postId);
+                    post.setHeading(rs.getString("heading"));
+                    post.setBody(rs.getString("body"));
+                    post.setImage(rs.getBytes("image"));
+                    post.setLikes(rs.getLong("likes"));
+                    post.setTags(tagManagerDao.findAllTagsToPost(postId));
+                    post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
+                    post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
+                    return post;
+                });
+    }
+
 }
