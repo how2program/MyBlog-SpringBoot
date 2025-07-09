@@ -113,26 +113,27 @@
 
     <button id="toggleFormButton">Создать пост</button>
 
-    <form id="editForm" th:method="POST" th:action="@{/posts}" style="display: none;">
+
+
+
+
+
+
+    <form id="editForm" th:method="POST" th:action="@{/posts}" style="display: none;" enctype="multipart/form-data">
 
       <div th:object="${postToCreate}">
       <label for="heading">Заголовок</label>
-      <input class="headingFormSize"
-             type="text" th:field="*{heading}"
-             id="heading"/>
+      <input class="headingFormSize" type="text" th:field="*{heading}" id="heading"/>
       <br>
       <label for="body">Текст поста</label>
-      <input class="bodyFormSize"
-             type="text" th:field="*{body}"
+      <input class="bodyFormSize" type="text" th:field="*{body}"
              id="body"/>
       <br>
       <label for="tags">Теги (через запятую)</label>
-      <input type="text"
-             th:field="*{tagsInString}"
-             id="tags"/>
+      <input type="text" th:field="*{tagsInString}" id="tags"/>
       </div>
       <br>
-<!--      <input type="file" name="image" accept=".jpg"/>-->
+      <input type="file" name="myImage" accept=".jpg"/>
       <input type="submit" value="Опубликовать"/>
     </form>
 

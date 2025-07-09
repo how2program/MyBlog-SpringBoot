@@ -14,7 +14,7 @@ public interface PostManagerService {
 
     Optional<Post> findById(long id);
 
-    void create(Post post) throws IOException, SQLException;
+    long create(Post post);
 
     void update(long id, Post updatedPost);
 

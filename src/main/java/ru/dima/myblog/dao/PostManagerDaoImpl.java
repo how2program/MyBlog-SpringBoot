@@ -2,9 +2,16 @@ package ru.dima.myblog.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 import ru.dima.myblog.model.Post;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +21,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
     private final JdbcTemplate jdbcTemplate;
     private final TagManagerDao tagManagerDao;
     private final CommentaryManagerDao commentaryManagerDao;
+    private KeyHolder keyHolder;
 
     @Autowired
     public PostManagerDaoImpl(JdbcTemplate jdbcTemplate,
@@ -32,12 +40,11 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setId(postId);
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
-            post.setImage(rs.getBlob("image"));
+            post.setImage(rs.getBytes("image"));
             post.setLikes(rs.getLong("likes"));
             post.setTags(tagManagerDao.findAllTagsToPost(postId));
             post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
             post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
-            post.setImage(rs.getBlob("image"));
             return post;
         });
     }
@@ -51,12 +58,11 @@ public class PostManagerDaoImpl implements PostManagerDao {
             post.setId(rs.getLong("id"));
             post.setHeading(rs.getString("heading"));
             post.setBody(rs.getString("body"));
-            post.setImage(rs.getBlob("image"));
+            post.setImage(rs.getBytes("image"));
             post.setLikes(rs.getLong("likes"));
             post.setTags(tagManagerDao.findAllTagsToPost(id));
             post.setCommentaries(commentaryManagerDao.findAllCommentaries(id));
             post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
-            post.setImage(rs.getBlob("image"));
             return post;
         })
                 .stream()
@@ -64,9 +70,25 @@ public class PostManagerDaoImpl implements PostManagerDao {
     }
 
     @Override
-    public void create(Post post) {
-        jdbcTemplate.update("INSERT INTO posts (heading, body, image, likes, creation_timestamp) VALUES (?, ?, ?, ?, ?)",
-                post.getHeading(), post.getBody(), post.getImage(), 0, post.getLocalDateTime());
+    public long create(Post post) {
+        keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection)
+                    throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(
+                        "INSERT INTO posts (heading, body, image, likes, creation_timestamp) VALUES (?, ?, ?, ?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, post.getHeading());
+                ps.setString(2, post.getBody());
+                ps.setBytes(3, post.getImage());
+                ps.setLong(4, 0);
+                ps.setTimestamp(5, java.sql.Timestamp.valueOf(post.getLocalDateTime()));
+                return ps;
+            }
+        }, keyHolder);
+        Long generatedId = keyHolder.getKey().longValue();
+        return generatedId;
     }
 
     @Override

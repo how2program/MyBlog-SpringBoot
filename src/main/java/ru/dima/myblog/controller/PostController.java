@@ -1,10 +1,15 @@
 package ru.dima.myblog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+import ru.dima.myblog.dao.PaginatorDao;
 import ru.dima.myblog.model.Commentary;
 import ru.dima.myblog.model.Post;
 import ru.dima.myblog.service.CommentaryManagerService;
@@ -12,29 +17,34 @@ import ru.dima.myblog.service.Likeable;
 import ru.dima.myblog.service.PostManagerService;
 import ru.dima.myblog.service.TagManagerService;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
 
-    private static long currentPostId = 4;
+    private static final int PAGE_SIZE = 10;
 
     private final PostManagerService postManagerService;
     private final TagManagerService tagManagerService;
     private final CommentaryManagerService commentaryManagerService;
     private final Likeable likeHandler;
+    private final PaginatorDao paginatorDao;
 
     @Autowired
     public PostController(PostManagerService postManagerService,
                           Likeable likeHandler,
                           TagManagerService tagManagerService,
-                          CommentaryManagerService commentaryManagerService) {
+                          CommentaryManagerService commentaryManagerService, PaginatorDao paginatorDao) {
         this.postManagerService = postManagerService;
         this.likeHandler = likeHandler;
         this.tagManagerService = tagManagerService;
         this.commentaryManagerService = commentaryManagerService;
+        this.paginatorDao = paginatorDao;
     }
 
     @GetMapping
@@ -42,6 +52,16 @@ public class PostController {
         model.addAttribute("posts", postManagerService.findAll());
         return "allposts";
     }
+
+//    @GetMapping В ПРОЦЕССЕ
+//    public String showAllPosts(@RequestParam(value = "page", defaultValue = "1") int page,
+//                               Model model) {
+//        int offset = (page - 1) * PAGE_SIZE;
+//        int totalPosts = postManagerService.findAll().size();
+//        int totalPages = (int) Math.ceil((double) totalPosts / PAGE_SIZE);
+//
+//        model.addAttribute("posts", paginatorDao.getAllPostsByPage(offset, PAGE_SIZE))
+//    }
 
     @GetMapping("/{id}")
     public String showOnePost(Model model, @PathVariable(name = "id") long id) {
@@ -61,13 +81,13 @@ public class PostController {
     }
 
     @PostMapping
-    public String createPost(@ModelAttribute(name = "postToCreate") Post post
-                             /*@RequestParam(name = "image") MultipartFile imageFile */) throws IOException, SQLException {
-
-        postManagerService.create(post);
-        tagManagerService.create(post.getTagsInString(), currentPostId);
-        currentPostId++;
-        return "redirect:/posts";
+    public String createPost(@ModelAttribute(name = "postToCreate") Post post,
+                             @RequestParam(name = "myImage") MultipartFile myImage) throws IOException {
+            byte[] imageBytes = myImage.getBytes();
+            post.setImage(imageBytes);
+            long currentPostId = postManagerService.create(post);
+            tagManagerService.create(post.getTagsInString(), currentPostId);
+            return "redirect:/posts";
     }
 
     @PostMapping("/like/{postId}")
@@ -89,36 +109,6 @@ public class PostController {
         return "redirect:/posts/" + id;
     }
 
-    @PostMapping(value = "/{postId}/commentary")
-    public String createCommentary(@PathVariable long postId,
-                                   @ModelAttribute(name = "commentary") Commentary commentary,
-                                   Model model) {
-        commentaryManagerService.createCommentary(postId, commentary);
-        return "redirect:/posts/" + postId;
-    }
 
-    @GetMapping("/{postId}/commentary/{commentaryId}/edit")
-    public String editCommentaryForm(@PathVariable(name = "postId") long postId,
-                                     @PathVariable(name = "commentaryId") long commentaryId,
-                                     Model model) {
-        model.addAttribute("commentToUpdate",
-                commentaryManagerService.findCommentaryByPostAndCommentaryId(postId, commentaryId).get());
-        return "changeCommentaryForm";
-    }
-
-    @PostMapping(value ="/{postId}/commentary/{commentaryId}/new", params = "_method=patch")
-    public String updateCommentary(@PathVariable(name = "postId") long postId,
-                                 @PathVariable(name = "commentaryId") long commentaryId,
-                                   @ModelAttribute("commentToUpdate") Commentary updatedCommentary) {
-        commentaryManagerService.updateCommentary(postId, commentaryId, updatedCommentary);
-        return "redirect:/posts/" + postId;
-    }
-
-    @PostMapping(value ="/{postId}/commentary/{commentaryId}", params = "_method=delete")
-    public String deleteCommentary(@PathVariable(name = "postId") long postId,
-                                   @PathVariable(name = "commentaryId") long commentaryId) {
-        commentaryManagerService.deleteCommentary(postId, commentaryId);
-        return "redirect:/posts/" + postId;
-    }
 
 }

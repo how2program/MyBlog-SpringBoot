@@ -36,9 +36,9 @@ public class PostManagerServiceImpl implements PostManagerService {
     }
 
     @Override
-    public void create(Post post) throws IOException, SQLException {
+    public long create(Post post) {
         post.setLocalDateTime(LocalDateTime.now());
-        postManagerDao.create(post);
+        return postManagerDao.create(post);
     }
 
     @Override

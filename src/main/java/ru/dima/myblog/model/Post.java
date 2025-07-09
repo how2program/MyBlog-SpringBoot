@@ -12,7 +12,7 @@ public class Post {
     private long id;
     private String heading;
     private String body;
-    private Blob image;
+    private byte[] image;
     private long likes;
     private List<Tag> tags;
     private String tagsInString;
@@ -43,11 +43,11 @@ public class Post {
         this.body = body;
     }
 
-    public Blob getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

@@ -90,7 +90,7 @@
         <p class="textFormat"
            th:text="${post.get().getBody()}">BODY</p>
         <br>
-        <a th:img="${post.get().getImage()}">IMAGE</a>
+        <img th:src="@{/posts/{id}/image(id=${post.get().getId()})}" alt="Imagezz" />
         <br>
         <form th:method="POST" th:action="@{/posts/like/{id}(id = ${post.get().getId()})}">
             <button type="submit"
