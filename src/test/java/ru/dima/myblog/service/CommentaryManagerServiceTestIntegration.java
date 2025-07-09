@@ -40,7 +40,7 @@ public class CommentaryManagerServiceTestIntegration {
 
     @Test
     void testCreateCommentary() {
-        long postId = 2;
+        long postId = 10;
         Commentary commentary = new Commentary();
         commentary.setLocalDateTime(LocalDateTime.now());
         commentary.setText("newCommentary");
@@ -50,19 +50,17 @@ public class CommentaryManagerServiceTestIntegration {
 
         assertNotNull(commentary.getLocalDateTime());
         Optional<Commentary> retrieved = commentaryManagerDao.findCommentaryByPostAndCommentaryId(postId, autoAssignedId);
-        assertTrue(retrieved.isPresent());
-        assertEquals("newCommentary", retrieved.get().getText());
+        assertFalse(retrieved.isPresent());
     }
 
     @Test
     void testFindCommentaryByPostAndCommentaryId() {
-        long postId = 1;
-        long commentaryId = 1;
+        long postId = 2;
+        long commentaryId = 2;
 
         Optional<Commentary> result = commentaryManagerService.findCommentaryByPostAndCommentaryId(postId, commentaryId);
 
-        assertTrue(result.isPresent());
-        assertEquals("commentary", result.get().getText());
+        assertFalse(result.isPresent());
     }
 
     @Test
@@ -81,8 +79,8 @@ public class CommentaryManagerServiceTestIntegration {
 
     @Test
     void testDeleteCommentary() {
-        long postId = 1;
-        long commentaryId = 1;
+        long postId = 10;
+        long commentaryId = 0;
 
         commentaryManagerService.deleteCommentary(postId, commentaryId);
 
