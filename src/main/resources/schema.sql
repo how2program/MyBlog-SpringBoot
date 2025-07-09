@@ -49,8 +49,8 @@ INSERT INTO tags(post_id, tag) VALUES (3, 'tag1');
 INSERT INTO tags(post_id, tag) VALUES (3, 'tag2');
 INSERT INTO tags(post_id, tag) VALUES (3, 'tag3');
 
-INSERT INTO posts(heading, body, creation_timestamp) VALUES ('4', 'TEEEEEEEEEEEEEEEEEEEEXT', CURRENT_TIMESTAMP);
-INSERT INTO posts(heading, body, creation_timestamp) VALUES ('5', 'ZHOZHOBAAAAAAAAAAAAA', CURRENT_TIMESTAMP);
+INSERT INTO posts(heading, body, creation_timestamp) VALUES ('4', 'WARNEVERCHANGES', CURRENT_TIMESTAMP);
+INSERT INTO posts(heading, body, creation_timestamp) VALUES ('5', 'WARNEVERCHANGES', CURRENT_TIMESTAMP);
 INSERT INTO posts(heading, body, creation_timestamp) VALUES ('6', 'WARNEVERCHANGES', CURRENT_TIMESTAMP);
 INSERT INTO posts(heading, body, creation_timestamp) VALUES ('7', 'WARNEVERCHANGES', CURRENT_TIMESTAMP);
 INSERT INTO posts(heading, body, creation_timestamp) VALUES ('8', 'WARNEVERCHANGES', CURRENT_TIMESTAMP);

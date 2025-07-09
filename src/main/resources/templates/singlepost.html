@@ -125,9 +125,11 @@
         <p class="whyIsThisNotDefault">) :</p>
         <div class="commentTextFormat" th:each="comment : ${commentaries}">
             <p id="commentTime" th:text="${comment.getLocalDateTime()}">TIME</p>
+
             <a th:href="@{/posts/{postId}/commentary/{commentaryId}/edit
             (postId = ${comment.getPostId()}, commentaryId=${comment.getId()})}"
                th:text="${comment.getText}">COMMENTARY TEXT</a>
+
             <form th:method="POST" th:action="@{/posts/{postId}/commentary/{commentaryId}
                                     (postId=${comment.getPostId()}, commentaryId=${comment.getId()})}">
                 <input type="hidden" name="_method" value="delete">

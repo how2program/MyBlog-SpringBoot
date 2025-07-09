@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.dima.myblog.dao.PaginatorDaoImpl;
 import ru.dima.myblog.model.Commentary;
 import ru.dima.myblog.model.Post;
 import ru.dima.myblog.service.*;
@@ -21,7 +20,6 @@ public class PostController {
 
     private final PostManagerService postManagerService;
     private final TagManagerService tagManagerService;
-    private final CommentaryManagerService commentaryManagerService;
     private final Likeable likeHandler;
     private final PaginatorService paginatorService;
 
@@ -29,18 +27,17 @@ public class PostController {
     public PostController(PostManagerService postManagerService,
                           Likeable likeHandler,
                           TagManagerService tagManagerService,
-                          CommentaryManagerService commentaryManagerService, PaginatorService paginatorService) {
+                          PaginatorService paginatorService) {
         this.postManagerService = postManagerService;
         this.likeHandler = likeHandler;
         this.tagManagerService = tagManagerService;
-        this.commentaryManagerService = commentaryManagerService;
         this.paginatorService = paginatorService;
     }
 
     @GetMapping
-    public String listPosts(@RequestParam(defaultValue = "0") int page,
-                            @RequestParam(defaultValue = "10") int size,
-                            Model model) {
+    public String showAll(@RequestParam(defaultValue = "0") int page,
+                          @RequestParam(defaultValue = "10") int size,
+                          Model model) {
         int offset = page * size;
         List<Post> posts = paginatorService.findPostsPage(offset, size);
         long totalPosts = paginatorService.countPosts();

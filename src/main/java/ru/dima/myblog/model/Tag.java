@@ -37,4 +37,16 @@ public class Tag {
     public String toString() {
         return tag;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Tag tag1 = (Tag) o;
+        return id == tag1.id && postId == tag1.postId && Objects.equals(tag, tag1.tag);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, postId, tag);
+    }
 }

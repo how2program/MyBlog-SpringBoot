@@ -88,4 +88,16 @@ public class Post {
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id && likes == post.likes && Objects.equals(heading, post.heading) && Objects.equals(body, post.body) && Objects.deepEquals(image, post.image) && Objects.equals(tags, post.tags) && Objects.equals(tagsInString, post.tagsInString) && Objects.equals(comments, post.comments) && Objects.equals(localDateTime, post.localDateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, heading, body, Arrays.hashCode(image), likes, tags, tagsInString, comments, localDateTime);
+    }
 }

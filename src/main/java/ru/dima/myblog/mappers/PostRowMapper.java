@@ -21,6 +21,8 @@ public class PostRowMapper {
         this.commentaryManagerDao = commentaryManagerDao;
     }
 
+    public PostRowMapper(){}
+
     public static Post mapRowToPost(ResultSet rs, int rowNum) throws SQLException {
         Post post = new Post();
         long postId = rs.getLong("id");
@@ -31,6 +33,22 @@ public class PostRowMapper {
         post.setLikes(rs.getLong("likes"));
         post.setTags(tagManagerDao.findAllTagsToPost(postId));
         post.setCommentaries(commentaryManagerDao.findAllCommentaries(postId));
+        post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
+        return post;
+    }
+
+    public Post mapRowToPostWithDaos(ResultSet rs, int rowNum,
+                                     TagManagerDao tagDao,
+                                     CommentaryManagerDao commentaryDao) throws SQLException {
+        Post post = new Post();
+        long postId = rs.getLong("id");
+        post.setId(postId);
+        post.setHeading(rs.getString("heading"));
+        post.setBody(rs.getString("body"));
+        post.setImage(rs.getBytes("image"));
+        post.setLikes(rs.getLong("likes"));
+        post.setTags(tagDao.findAllTagsToPost(postId));
+        post.setCommentaries(commentaryDao.findAllCommentaries(postId));
         post.setLocalDateTime(rs.getTimestamp("creation_timestamp").toLocalDateTime());
         return post;
     }

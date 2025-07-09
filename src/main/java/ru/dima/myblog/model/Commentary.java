@@ -45,4 +45,16 @@ public class Commentary {
     public String toString() {
         return text;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Commentary that = (Commentary) o;
+        return id == that.id && postId == that.postId && Objects.equals(text, that.text) && Objects.equals(localDateTime, that.localDateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, postId, text, localDateTime);
+    }
 }
