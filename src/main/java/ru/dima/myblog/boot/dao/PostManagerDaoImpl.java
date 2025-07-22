@@ -81,9 +81,10 @@ public class PostManagerDaoImpl implements PostManagerDao {
     }
 
     @Override
-    public List<Post> findByTag(String tag) {
-        return jdbcTemplate.query("SELECT posts.* FROM posts JOIN tags ON posts.id = tags.post_id WHERE tags.tag = ?",
-                new Object[]{tag}, PostRowMapper::mapRowToPost);
+    public List<Post> findByTag(String tag, int offset, int limit) {
+        return jdbcTemplate.query("SELECT posts.* FROM posts JOIN tags ON posts.id = tags.post_id WHERE tags.tag = ?" +
+                        "LIMIT ? OFFSET ?",
+                new Object[]{tag, limit, offset}, PostRowMapper::mapRowToPost);
     }
 
 }
