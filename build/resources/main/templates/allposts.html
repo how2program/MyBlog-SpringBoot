@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">>
+  <head>
+    <meta charset="UTF-8">
+    <title>Available posts</title>
+    <style>
+      #overBody {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: auto;
+      }
+      .feedHeading {
+        color: rgba(43, 20, 255, 0.96);
+        font-size: 20px;
+        font-family: Bahnschrift;
+        font-weight: bold;
+        max-width: 300px;
+        margin-left: 160px;
+      }
+      #iLike {
+        color: red;
+        font-size: 30px;
+      }
+      .onOneLine {
+        display: inline-block;
+      }
+      .textFormat {
+        width: 600px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-indent: 2em;
+      }
+      /*.ALLOBJECTS {*/
+      /*  text-align: center;*/
+      /*}*/
+      .headingFormSize {
+        width: 300px;
+        height: 50px;
+      }
+      .bodyFormSize {
+        width: 300px;
+        height: 150px;
+      }
+      .tags {
+        width: 300px;
+        word-wrap: break-word;
+        color: #708090;
+      }
+      #tagsLabel {
+        font-weight: bold;
+        font-style: italic;
+        color: #708090;
+      }
+      #time {
+        font-size: 15px;
+        font-style:italic;
+        color: #8b0000;
+        text-indent: 0;
+      }
+      #iComment {
+        color: blue;
+        font-size: 30px;
+      }
+      .onOneLineComments {
+        display: inline-block;
+      }
+      .filter {
+        position: fixed;
+        top: 50%;
+        left: 4%;
+        transform: translateY(-50%);
+        z-index: 1000;
+      }
+      .createPostButton {
+        position: fixed;
+        top: 70%;
+        left: 4%;
+        transform: translateY(-50%);
+        z-index: 1000;
+      }
+      #img {
+        width: 200px;
+        height: auto;
+        object-fit: cover;
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+  <div id="overBody">
+
+  <div class="ALLOBJECTS">
+
+
+    <div th:each="post : ${posts}">
+      <div class="feedHeading">
+      <a
+         th:href="@{/posts/{id}(id = ${post.getId()})}" th:text="${post.getHeading()}">HEADING</a>
+      </div>
+      <br>
+      <p class="textFormat"
+         th:text="${post.getBody()}">BODY</p>
+
+      <img id="img" th:src="@{/posts/{id}/image(id=${post.getId()})}" alt="Imagezz" />
+
+      <p id="time" th:text="${post.getLocalDateTime()}">TIME</p>
+
+      <p class="onOneLine"
+         id="iLike">&#10084;</p>
+
+      <p class="onOneLine"
+         id="likesNum"
+         th:text="${post.getLikes()}">LIKES_AMOUNT</p>
+
+      <p class="onOneLineComments"
+         id="iComment">&#9998;</p>
+
+      <p class="onOneLineComments"
+         id="commentsNum"
+         th:text="${post.getCommentaries().size()}">COMMENTARIES_AMOUNT</p>
+
+      <p id="tagsLabel">Теги:</p>
+      <div class="tags">
+        <p th:text = "${post.getTags()}">TAGS</p>
+      </div>
+    </div>
+
+    <div class="createPostButton">
+
+    <button id="toggleFormButton">Создать пост</button>
+
+    <form id="editForm" th:method="POST" th:action="@{/posts}" style="display: none;" enctype="multipart/form-data">
+
+      <div th:object="${postToCreate}">
+      <label for="heading">Заголовок</label>
+      <input class="headingFormSize" type="text" th:field="*{heading}" id="heading"/>
+      <br>
+      <label for="body">Текст поста</label>
+      <input class="bodyFormSize" type="text" th:field="*{body}"
+             id="body"/>
+      <br>
+      <label for="tags">Теги (через запятую)</label>
+      <input type="text" th:field="*{tagsInString}" id="tags"/>
+      </div>
+      <br>
+      <input type="file" name="myImage" accept="image/*"/>
+      <input type="submit" value="Опубликовать"/>
+    </form>
+
+    </div>
+
+    <script>
+      document.getElementById('toggleFormButton').addEventListener('click', function() {
+        var form = document.getElementById('editForm');
+        if (form.style.display === 'none') {
+          form.style.display = 'block';
+        } else {
+          form.style.display = 'none';
+        }
+      });
+    </script>
+
+  </div>
+
+    <div>
+      <a th:if="${currentPage > 0}" th:href="@{/posts(page=${currentPage - 1}, size=${size})}">Предыдущая</a>
+
+      <span th:text="${currentPage + 1} + '/' + ${totalPages}">Страница</span>
+
+      <a th:if="${currentPage + 1 < totalPages}" th:href="@{/posts(page=${currentPage + 1}, size=${size})}">Следующая</a>
+    </div>
+
+    <form method="get" th:action="@{/posts}">
+      <select name="size" onchange="this.form.submit()">
+        <option th:value="10" th:selected="${size == 10}">10</option>
+        <option th:value="20" th:selected="${size == 20}">20</option>
+        <option th:value="50" th:selected="${size == 50}">50</option>
+      </select>
+      <input type="hidden" name="page" th:value="${currentPage > 0 ? 0 : 0}"/>
+    </form>
+
+  </div>
+
+
+  <form class="filter" th:method="GET" th:action="@{/posts/filter}">
+    <label for="tagToType">Отфильтровать по тегу</label>
+    <input type="text" name="myTag" id="tagToType"/>
+    <input type="submit" value="Отфильтровать"/>
+  </form>
+
+  </body>
+</html>
