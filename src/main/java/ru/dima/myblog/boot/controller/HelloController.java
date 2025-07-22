@@ -12,6 +12,6 @@ public class HelloController {
     @GetMapping
     @ResponseBody
     public String hello() {
-        return "Welcome to my blog.";
+        return "<h1>Welcome to my blog.</h3>";
     }
 }
