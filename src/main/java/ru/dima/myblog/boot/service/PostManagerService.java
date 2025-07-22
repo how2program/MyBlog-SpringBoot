@@ -17,5 +17,5 @@ public interface PostManagerService {
 
     void deleteById(long id);
 
-    List<Post> findByTag(String tag);
+    List<Post> findByTag(String tag, int offset, int limit);
 }

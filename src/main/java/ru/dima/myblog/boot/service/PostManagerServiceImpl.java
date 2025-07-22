@@ -47,7 +47,7 @@ public class PostManagerServiceImpl implements PostManagerService {
     }
 
     @Override
-    public List<Post> findByTag(String tag) {
-        return postManagerDao.findByTag(tag);
+    public List<Post> findByTag(String tag, int offset, int limit) {
+        return postManagerDao.findByTag(tag, offset, limit);
     }
 }

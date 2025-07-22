@@ -103,10 +103,18 @@ public class PostController {
     }
 
     @GetMapping("/filter")
-    public String filterPosts(@RequestParam(name = "myTag") String myTag,
+    public String filterPosts(@RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "10") int size,
+                              @RequestParam(name = "myTag") String myTag,
                               Model model) {
-        List<Post> filteredPosts = postManagerService.findByTag(myTag);
+        int offset = page * size;
+        List<Post> filteredPosts = postManagerService.findByTag(myTag, offset, size);
+        long totalPosts = paginatorService.countPosts();
+        int totalPages = (int) Math.ceil((double) totalPosts / size);
+
         model.addAttribute("posts", filteredPosts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         return "allposts";
     }
 
