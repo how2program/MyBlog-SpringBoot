@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.dima.myblog.boot.dao.CommentaryManagerDao;
 import ru.dima.myblog.boot.dao.TagManagerDao;
-import ru.dima.myblog.boot.model.Post;
+import ru.dima.myblog.boot.models.Post;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -7,7 +7,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.stereotype.Repository;
 import ru.dima.myblog.boot.mappers.PostRowMapper;
-import ru.dima.myblog.boot.model.Post;
+import ru.dima.myblog.boot.models.Post;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -83,7 +83,7 @@ public class PostManagerDaoImpl implements PostManagerDao {
     @Override
     public List<Post> findByTag(String tag, int offset, int limit) {
         return jdbcTemplate.query("SELECT posts.* FROM posts JOIN tags ON posts.id = tags.post_id WHERE tags.tag = ?" +
-                        "LIMIT ? OFFSET ?",
+                        " LIMIT ? OFFSET ?",
                 new Object[]{tag, limit, offset}, PostRowMapper::mapRowToPost);
     }
 

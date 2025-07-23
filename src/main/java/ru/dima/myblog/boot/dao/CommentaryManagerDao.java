@@ -1,6 +1,6 @@
 package ru.dima.myblog.boot.dao;
 
-import ru.dima.myblog.boot.model.Commentary;
+import ru.dima.myblog.boot.models.Commentary;
 import java.util.List;
 import java.util.Optional;
 

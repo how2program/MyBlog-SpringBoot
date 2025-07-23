@@ -1,6 +1,6 @@
 package ru.dima.myblog.boot.dao;
 
-import ru.dima.myblog.boot.model.Post;
+import ru.dima.myblog.boot.models.Post;
 
 import java.util.List;
 

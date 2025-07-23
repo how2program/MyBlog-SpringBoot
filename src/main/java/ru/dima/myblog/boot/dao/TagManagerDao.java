@@ -1,6 +1,6 @@
 package ru.dima.myblog.boot.dao;
 
-import ru.dima.myblog.boot.model.Tag;
+import ru.dima.myblog.boot.models.Tag;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package ru.dima.myblog.boot.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.dima.myblog.boot.model.Commentary;
+import ru.dima.myblog.boot.models.Commentary;
 
 import java.util.List;
 import java.util.Optional;

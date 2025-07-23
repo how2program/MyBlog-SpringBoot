@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.dima.myblog.boot.mappers.PostRowMapper;
-import ru.dima.myblog.boot.model.Post;
+import ru.dima.myblog.boot.models.Post;
 
 import java.util.List;
 
