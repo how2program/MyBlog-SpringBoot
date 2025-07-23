@@ -1,25 +1,25 @@
 package ru.dima.myblog.boot.services;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.dima.myblog.boot.dao.PostManagerDao;
+import ru.dima.myblog.boot.models.Post;
+import ru.dima.myblog.boot.models.Tag;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.dima.myblog.boot.dao.PostManagerDao;
-import ru.dima.myblog.boot.models.Post;
-import ru.dima.myblog.boot.models.Tag;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class PostManagerServiceUT {
+
     @Mock
     private PostManagerDao postManagerDao;
 
@@ -37,7 +37,6 @@ public class PostManagerServiceUT {
         assertEquals(2, result.size());
         verify(postManagerDao).findAll();
     }
-
 
     @Test
     public void testFindById() {
@@ -62,7 +61,6 @@ public class PostManagerServiceUT {
 
         assertNotNull(post.getLocalDateTime());
         assertTrue(post.getLocalDateTime().isBefore(LocalDateTime.now().plusSeconds(1)));
-
         assertEquals(123, generatedId);
 
         verify(postManagerDao).create(post);
@@ -91,6 +89,7 @@ public class PostManagerServiceUT {
     @Test
     public void testFindByTag() {
         String tag = "java";
+
         Tag tag1 = new Tag();
         tag1.setTag("java");
         Tag tag2 = new Tag();
@@ -112,7 +111,9 @@ public class PostManagerServiceUT {
 
         List<Post> result = postManagerServiceImpl.findByTag(tag, 0, 10);
 
-        assertThat(result).containsExactlyInAnyOrder(post1, post2);
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertTrue(result.containsAll(expectedPosts));
         verify(postManagerDao).findByTag(tag, 0, 10);
     }
 }

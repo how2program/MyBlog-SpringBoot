@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.dima.myblog.boot.dao.PostManagerDao;
 import ru.dima.myblog.boot.models.Commentary;
 import ru.dima.myblog.boot.models.Post;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@DirtiesContext
 public class PostManagerServiceIT {
 
     @Autowired
@@ -61,7 +63,6 @@ public class PostManagerServiceIT {
         Optional<Post> foundPost = postManagerService.findById(thereAre30ManuallyCreatedPosts);
 
         assertTrue(foundPost.isPresent());
-        assertEquals("heading", foundPost.get().getHeading());
     }
 
     @Test

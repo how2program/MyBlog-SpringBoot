@@ -1,14 +1,10 @@
 package ru.dima.myblog.boot.services;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.dima.myblog.boot.dao.CommentaryManagerDao;
-import ru.dima.myblog.boot.dao.PostManagerDao;
 import ru.dima.myblog.boot.models.Commentary;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootTest
+@DirtiesContext
 public class CommentaryManagerServiceIT {
 
     @Autowired

@@ -2,6 +2,9 @@ package ru.dima.myblog.boot.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.dima.myblog.boot.dao.CommentaryManagerDao;
 import ru.dima.myblog.boot.models.Commentary;
 import java.util.Optional;
@@ -9,6 +12,8 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@DirtiesContext
+@ExtendWith(MockitoExtension.class)
 public class CommentaryManagerServiceUT {
 
     private CommentaryManagerDao commentaryManagerDao;

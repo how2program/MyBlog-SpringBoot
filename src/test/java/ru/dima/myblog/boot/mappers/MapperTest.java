@@ -3,8 +3,6 @@ package ru.dima.myblog.boot.mappers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.dima.myblog.boot.dao.CommentaryManagerDao;
 import ru.dima.myblog.boot.dao.TagManagerDao;
 import ru.dima.myblog.boot.models.Commentary;
