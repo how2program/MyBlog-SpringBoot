@@ -10,6 +10,9 @@ build/
 *.ipr
 *.iws
 
+.project/
+.classpath/
+
 .DS_Store
 Thumbs.db
 
