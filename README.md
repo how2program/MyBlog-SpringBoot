@@ -6,3 +6,7 @@
 (На компьютере должна быть установлена JVM)
 
 Для тестирования необходимо прописать: gradle test
+
+<img width="2129" height="1200" alt="image" src="https://github.com/user-attachments/assets/1f8b0bc9-99de-47ae-b298-1c37b3786dfb" />
+
+<img width="979" height="1253" alt="image" src="https://github.com/user-attachments/assets/a7969709-fd83-44a3-8ff9-18f12e6150a0" />
